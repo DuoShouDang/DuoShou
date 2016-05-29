@@ -10,6 +10,7 @@ require_once "../data_management/DSDFileStorageManager.php";
 require_once "../data_management/DSDDatabaseConnector.php";
 require_once "../request_and_respond/DSDRequestResponder.php";
 require_once "../utils/Utils.php";
+require_once "../account_management/DSDAuthorizationChecker.php";
 
 class DSDRequestFileHandler{
     public static function upload(){
@@ -70,7 +71,12 @@ class DSDRequestFileHandler{
                 header("Content-type: application/force-download");
                 Header("Content-Disposition: attachment;filename=".$info["file_name"].".".$info["ext"]);
             }
-            echo DSDFileStorageManager::readFileWithToken($fhash);
+            $res=DSDFileStorageManager::readFileWithToken($fhash);
+            if($res){
+                echo $res;
+            }else{
+                DSDRequestResponder::respond(false, "Invalid token");
+            }
         }elseif($_SERVER["REQUEST_METHOD"]=="PUT"){
             self::ensureWriteRightsToToken($fhash);
             $file=$_FILES["file"];
