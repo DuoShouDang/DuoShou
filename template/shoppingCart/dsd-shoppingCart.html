@@ -29,11 +29,12 @@
         <paper-card class="content" heading="购物车">
             <div class="card-content">
 				<template is="dom-repeat" items="{{cast_result.successInfo}}">
-					<paper-card class="item" heading={{item.name}}>
+					<paper-card class="item" heading="{{item.info}}">
 						<table border=0>
-							<td>{{item.productinfo.price}}</td>
+							<td>{{item.product_info.product_name}}</td>
+							<td>{{item.product_info.price}}</td>
 							<td>{{item.number}}</td>
-							<td>{{mul(item.productinfo.price,item.number)}}</td>
+							<td>{{mul(item.product_info.price,item.number)}}</td>
 						</table>
 					</paper-card>
 				</template>
@@ -47,7 +48,7 @@
         <paper-toast id="tip">{{toast_msg}}</paper-toast>
 		
 		
-		<iron-ajax auto id="showcart_ajax" url="/api/shoppingcart" method="GET" headers="{{showcart_auth}}" last-response="{{cast_result}}" on-response="cast_completed"></iron-ajax>
+		<iron-ajax auto id="showcart_ajax" url="/api/shoppingcart" method="GET" headers="{{showcart_auth}}" last-response="{{cast_result}}"></iron-ajax>
 
         <iron-ajax id="cashout_ajax" url="/api/bill" method="POST" body="{{ajax_content}}" last-response="{{cashout_result}}" on-response="cashout_completed"></iron-ajax>
         <dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
@@ -62,7 +63,7 @@
             ],
 			_authChanged:function(token){
 				this.showcart_auth={
-					authentication: this.token
+					authorization: this.token
 				};
 			},
             cashout: function(){
