@@ -11,11 +11,9 @@ require_once "../request_and_respond/DSDRequestResponder.php";
 class DSDRequestHandler{
     static function handleRequest(){
         $action=@$_GET["action"];
-        var_dump($action);
         if(!preg_match("#^[0-9a-zA-Z_]+$#", $action)){
             DSDRequestResponder::respond(false, "Invalid action: illegal character");
         }
-        $action=strtolower($action);
         $comps=explode("_", $action);
         if(file_exists("../request_and_respond/routers.json")){
             $paths=json_decode(file_get_contents("../request_and_respond/routers.json"), true);
