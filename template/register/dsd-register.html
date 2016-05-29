@@ -10,7 +10,15 @@
 
 <dom-module id="dsd-register">
     <template>
-        <div class="main">
+        <style>
+            .content{
+                margin:auto auto;
+                display: block;
+                width: 400px;
+                margin-top: 100px;
+            }
+        </style>
+        <paper-card class="content" heading="注册剁手党">
 			<paper-input label="Email" auto-validate pattern="[a-zA-Z\-_\.\d]+@([a-zA-Z\d]*\.)+[a-zA-Z\d]+" error-message="请输入合法的邮箱地址" value="{{email}}"></paper-input>
             <paper-input label="用户名" auto-validate pattern=".{3,30}" error-message="用户名请在3-30个字节之间" maxlength=30 value="{{username}}"></paper-input>
             <paper-input label="密码" auto-validate pattern=".{6,}" error-message="密码不少于6位" value="{{password}}" type="password"></paper-input>
@@ -20,7 +28,7 @@
 
             <iron-ajax id="register_ajax" url="/api/account/register" method="POST" body="{{ajax_content}}" last-response="{{register_result}}" on-response="register_completed"></iron-ajax>
             <iron-localstorage name="token" value="{{token}}"></iron-localstorage>
-        </div>
+        </paper-card>
     </template>
 
     <script src="/script/md5.js"></script>
@@ -58,6 +66,7 @@
                 if(this.register_result.success){
                     this.token=this.register_result.successInfo;
                     alert("register succeed, token="+this.token);
+					window.location.href="/#/home/";
                 }else{
                     alert(this.register_result.errorInfo);
                 }
