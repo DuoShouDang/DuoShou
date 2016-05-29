@@ -83,8 +83,8 @@
             cashout_completed: function(){
 				//TODO
             },
-			getItemTypeName(a,b){return a[b].name},
-			mul(a,b){return a*b;},
+			getItemTypeName:function (a,b){return a[b].name},
+			mul:function (a,b){return a*b;},
 			removeOne: function(item){
 				if(item.number==1){
 					this.$.deleteItem_ajax.generateRequest();
