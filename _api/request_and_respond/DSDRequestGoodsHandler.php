@@ -16,6 +16,17 @@ class DSDRequestGoodsHandler{
         DSDRequestResponder::respond(true, null, $info);
     }
 
+    public static function random($num) {
+        $info = DSDGoodsManager::view_all_goods(0, 100);
+        $info = $info["goods"];
+        $result = array();
+        while (count($result) < $num && count($info) >= $num) {
+            $rand = rand() % min(count($info), 100);
+            $result = array_merge($result, array($info[$rand]));
+        }
+        DSDRequestResponder::respond(true, null, $result);
+    }
+
     public static function category($cid, $page, $num_per_page) {
         if (!DSDGoodsManager::check_category($cid)) {
             DSDRequestResponder::http_code(404, false);
