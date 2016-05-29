@@ -1,0 +1,68 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+
+<link rel="import" href="/bower_components/paper-card/paper-card.html">
+<link rel="import" href="/bower_components/paper-toast/paper-toast.html">
+
+<link rel="import" href="/template/utils/dsd-authentication.html">
+
+<dom-module id="dsd-shoppingCart">
+    <template>
+        <style>
+            .content{
+                margin:auto auto;
+                display: block;
+                width: 400px;
+                margin-top: 100px;
+            }
+        </style>
+        <paper-card class="content" heading="购物车">
+            <div class="card-content">
+				
+            </div>
+            <div class="card-actions">
+                <paper-button on-tap="cashout">去结算</paper-button>
+            </div>
+        </paper-card>
+
+        <paper-toast id="tip">{{toast_msg}}</paper-toast>
+
+        <iron-ajax id="cashout_ajax" url="/api/bill" method="POST" body="{{ajax_content}}" last-response="{{cashout_result}}" on-response="cashout_completed"></iron-ajax>
+        <dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
+    </template>
+
+    <script src="/script/md5.js"></script>
+    <script>
+        Polymer({
+            is: "dsd-shoppingCart",
+            observers:[
+            ],
+            cashout: function(){
+                this.ajax_content=JSON.stringify({
+					// TODO
+                });
+                this.toast_msg="正在跳转，请稍候...";
+                this.$.tip.open();
+                this.$.login_ajax.generateRequest();
+            },
+            cashout_completed: function(){
+				//TODO
+            },
+            properties:{
+                username: {
+                    type: String
+                },
+                ajax_content: {
+                    type: String
+                },
+                token: {
+                    type: String
+                }
+            }
+        });
+
+    </script>
+</dom-module>
