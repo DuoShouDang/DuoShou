@@ -37,7 +37,7 @@
 						<table border="0">
 							<td class="tdClass">型号  {{getItemTypeName(item.info,item.sort_identifier)}}</td>
 							<td class="tdClass">单价  {{item.product_info.price}}</td>
-							<td class="tdClass">件数  {{item.number}}  <paper-icon-button icon="remove-circle-outline" on-click="removeOne({{item}})"></paper-icon-button><paper-icon-button icon="add-circle-outline" on-click="addOne({{item}})"></paper-icon-button></td>
+							<td class="tdClass">件数  {{item.number}}  <paper-icon-button icon="remove-circle-outline" on-click="{{removeOne(item)}}"></paper-icon-button><paper-icon-button icon="add-circle-outline" on-click="{{addOne(item)}}"></paper-icon-button></td>
 							<td class="tdClass">总价  {{mul(item.product_info.price,item.number)}}</td>
 						</table>
 					</paper-card>
