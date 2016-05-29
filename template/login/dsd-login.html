@@ -4,10 +4,11 @@
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
 
 <link rel="import" href="/bower_components/paper-card/paper-card.html">
 <link rel="import" href="/bower_components/paper-toast/paper-toast.html">
+
+<link rel="import" href="/template/utils/dsd-authentication.html">
 
 <dom-module id="dsd-login">
     <template>
@@ -33,9 +34,7 @@
         <paper-toast id="tip">{{toast_msg}}</paper-toast>
 
         <iron-ajax id="login_ajax" url="/api/account/login" method="POST" body="{{ajax_content}}" last-response="{{login_result}}" on-response="login_completed"></iron-ajax>
-        <iron-localstorage name="token" value="{{token}}"></iron-localstorage>
-        <iron-localstorage name="username" value="{{verified_username}}"></iron-localstorage>
-        <iron-localstorage name="type" value="{{type}}"></iron-localstorage>
+        <dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
     </template>
 
     <script src="/script/md5.js"></script>
