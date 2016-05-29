@@ -44,7 +44,6 @@ class DSDRequestAdminHandler{
                 foreach ($info as $key => $item) {
                     $number = $item["remains"];
                     if (!is_numeric($number) || $number <= 0) {
-                        DSDRequestResponder::http_code(400, false);
                         DSDRequestResponder::respond(false, "剩余库存错误");
                     }
                 }

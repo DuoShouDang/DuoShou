@@ -194,4 +194,12 @@ class Utils {
         }
         return 0;
     }
+
+    /**
+     * @param string $data The data to be checked
+     * @return bool Whether the data is a valid E-mail
+     */
+    static function is_email($data) {
+        return ($data == filter_var($data, FILTER_VALIDATE_EMAIL));
+    }
 }
