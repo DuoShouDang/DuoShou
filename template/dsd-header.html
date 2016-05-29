@@ -7,17 +7,22 @@
 <link rel="import" href="/bower_components/iron-image/iron-image.html">
 <link rel="import" href="/bower_components/iron-icons/iron-icons.html">
 
+<link rel="import" href="/template/utils/dsd-authentication.html">;
+
 <dom-module id="dsd-header">
     <template>
         <style>
             .logo{
                 width:70px;
                 height: 60px;
-                background-color: white;
+                background-color: grey;
                 cursor: pointer;
             }
             .logo:hover{
                 background-color: salmon;
+            }
+            paper-button{
+                color: grey;
             }
             paper-toolbar{
                 --paper-toolbar-background: black;
@@ -25,17 +30,28 @@
             paper-toolbar paper-button:hover{
                 color: salmon;
             }
+            paper-toolbar paper-icon-button:hover{
+                color: salmon;
+            }
         </style>
         <paper-header-panel class="flex">
             <paper-toolbar>
                 <iron-image class="logo" src="/images/logo.png" sizing="cover"></iron-image>
                 <template is="dom-repeat" items="{{items}}">
-                    <paper-button on-tap="jump" data="{{item.target}}"><iron-icon icon="{{item.icon}}"></iron-icon>&nbsp;{{item.name}}</paper-button>
+                    <paper-button on-tap="jump" data="{{item.target}}"><iron-icon icon="{{item.icon}}"></iron-icon>&nbsp;&nbsp;{{item.name}}</paper-button>
                 </template>
                 <div class="title"></div>
-                <paper-icon-button icon="more-vert" on-tap="moreAction"></paper-icon-button>
+                <template is="dom-if" if="{{token}}">
+                    <paper-icon-button icon="account-circle"></paper-icon-button>
+                </template>
+                <template is="dom-if" if="{{!token}}">
+                    <paper-button on-tap="jump" data="login"><iron-icon icon="account-box"></iron-icon>&nbsp;&nbsp;登录</paper-button>
+                    <paper-button on-tap="jump" data="register"><iron-icon icon="create"></iron-icon>&nbsp;&nbsp;注册</paper-button>
+                </template>
             </paper-toolbar>
         </paper-header-panel>
+
+        <dsd-authentication token="{{token}}"></dsd-authentication>
 
     </template>
 
