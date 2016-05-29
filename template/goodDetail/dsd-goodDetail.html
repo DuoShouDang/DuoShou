@@ -65,7 +65,7 @@
 		observers:[
 		'_routePageChanged(routeData.page_id)'
 		],
-		_routePageChanged function(route_page_id){
+		_routePageChanged: function(route_page_id){
 			this.page_id = route_page_id;
 		},
 		load_complete: function(){
@@ -77,32 +77,32 @@
 				this.gdescription = good.description;
 			}
 		},
-		_getAllVersions function(goodInfo){
+		_getAllVersions: function(goodInfo){
 			var allVersions = [];
 			for(var key in goodInfo){
 				allVersions.push(goodInfo[key]);
 			}
 		}
 		properties:{
-			good{
+			good: {
 				type: Object
 			},
-			page_id{
+			page_id: {
 				type: String
 			},
-			gid{
+			gid: {
 				type: String
 			},
-			gname{
+			gname: {
 				type: String
 			},
-			gversions{
+			gversions: {
 				type: Array
 			},
-			currentVersion{
+			currentVersion: {
 				type: Object
 			},
-			gdescription{
+			gdescription: {
 				type: String
 			}
 		}
