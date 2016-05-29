@@ -3,21 +3,86 @@
 <link rel="import" href="/bower_components/paper-header-panel/paper-header-panel.html">
 <link rel="import" href="/bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/iron-image/iron-image.html">
+<link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="/template/utils/dsd-authentication.html">;
 
 <dom-module id="dsd-header">
     <template>
+        <style>
+            .logo{
+                width:70px;
+                height: 60px;
+                background-color: grey;
+                cursor: pointer;
+            }
+            .logo:hover{
+                background-color: salmon;
+            }
+            paper-button{
+                color: grey;
+            }
+            paper-toolbar{
+                --paper-toolbar-background: black;
+            }
+            paper-toolbar paper-button:hover{
+                color: salmon;
+            }
+            paper-toolbar paper-icon-button:hover{
+                color: salmon;
+            }
+        </style>
         <paper-header-panel class="flex">
             <paper-toolbar>
-                <paper-button>首页</paper-button>
+                <iron-image class="logo" src="/images/logo.png" sizing="cover"></iron-image>
+                <template is="dom-repeat" items="{{items}}">
+                    <paper-button on-tap="jump" data="{{item.target}}"><iron-icon icon="{{item.icon}}"></iron-icon>&nbsp;&nbsp;{{item.name}}</paper-button>
+                </template>
+                <div class="title"></div>
+                <template is="dom-if" if="{{token}}">
+                    <paper-icon-button icon="account-circle"></paper-icon-button>
+                </template>
+                <template is="dom-if" if="{{!token}}">
+                    <paper-button on-tap="jump" data="login"><iron-icon icon="account-box"></iron-icon>&nbsp;&nbsp;登录</paper-button>
+                    <paper-button on-tap="jump" data="register"><iron-icon icon="create"></iron-icon>&nbsp;&nbsp;注册</paper-button>
+                </template>
             </paper-toolbar>
         </paper-header-panel>
+
+        <dsd-authentication token="{{token}}"></dsd-authentication>
+
     </template>
 
     <script>
         Polymer({
             is: "dsd-header",
+            jump: function(evt){
+                var value=evt.target.getAttribute("data");
+                window.location.href="/#/"+evt.target.getAttribute("data");
+            },
             properties:{
-
+                items:{
+                    type: Array,
+                    value: [
+                        {
+                            name: "首页",
+                            target: "home",
+                            icon: "home"
+                        },
+                        {
+                            name: "商品",
+                            target: "goods",
+                            icon: "apps"
+                        },
+                        {
+                            name: "关于",
+                            target: "about",
+                            icon: "info"
+                        }
+                    ]
+                }
             }
         });
 

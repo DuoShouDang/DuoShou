@@ -1,0 +1,113 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/bower_components/app-route/app-location.html">
+<link rel="import" href="/bower_components/app-route/app-route.html">
+
+<dom-module id="dsd-goodDetail">
+	<template>
+		<app-location route="{{route}}" use-hash-as-path></app-location>
+		<app-route
+		route="{{route}}"
+		pattern="/goodDetail/:page_id"
+		data="{{routeData}}"
+		tail="{{subroute}}">
+	</app-route>
+	<p>Data: {{routeData}}</p>
+	<div class="good-introduce">
+		<div class="good-preview">
+			<img src={{this.currentVersion.image}}>
+			<div class="gid">{{this.gid}}</div>
+		</div>
+		<div class="good-info">
+			<div class="good-name">{{this.gname}}</div>
+			<div class="good-detail">{{this.gdescription}}</div>
+			<div class="good-price">{{this.currentVersion.price}}</div>
+			<div class="good-choose">
+				<template class="choose-version" is="dom-repeat" items="{{this.gversions}}">
+					<a href="">{{item.name}}</a>
+				</template>
+				<div class="remain-count">{{this.currentVersion.remains}}</div>
+			</div>
+			<div class="good-buy">
+				<a href="">立即购买</a>
+				<a href="">加入购物车</a>
+			</div>
+		</div>
+
+		<iron-ajax id="good_ajax" url="/api/goods/"+this.page_id methos="GET" body="{{good}}" last-response="{{result}}" on-response="load_complete"></iron-ajax>
+	</div>
+	<p>page_id: {{this.page_id}}, goodObject: {{this.good}}, allVersions: {{this.gversions}}, description: {{this.gdescription}}, currentVersion: {{this.currentVersion}} </p>
+
+	<style type="text/css">
+		.good-introduce{
+			margin-left: auto;
+			margin-right: auto;
+			width: 80%;
+			height: 600px;
+		}
+		.good-preview{
+			width: 35%;
+			height: inherit;
+			float: left;
+			background-color: gray;
+		}
+		.good-info{
+			width: 65%;
+			height: inherit;
+			float: right;
+			background-color: lightgray;
+		}
+	</style>
+</template>
+
+<script>
+	Polymer({
+		is: "dsd-goodDetail",
+		observers:[
+		'_routePageChanged(routeData.page_id)'
+		],
+		_routePageChanged: function(route_page_id){
+			this.page_id = route_page_id || 1;
+		},
+		load_complete: function(){
+			if (this.result.success) {
+				this.gid = good.gid;
+				this.gname = good.name;
+				this.gversions = _getAllVersions(good.info);
+				this.currentVersion = this.gversions[0];
+				this.gdescription = good.description;
+			}
+		},
+		_getAllVersions: function(goodInfo){
+			var allVersions = [];
+			for(var key in goodInfo){
+				allVersions.push(goodInfo[key]);
+			}
+		},
+		properties:{
+			good: {
+				type: Object
+			},
+			page_id: {
+				type: Number
+			},
+			gid: {
+				type: Number
+			},
+			gname: {
+				type: String
+			},
+			gversions: {
+				type: Array
+			},
+			currentVersion: {
+				type: Object
+			},
+			gdescription: {
+				type: String
+			}
+		}
+	});
+
+</script>
+</dom-module>
