@@ -8,7 +8,7 @@
 		<app-location route="{{route}}" use-hash-as-path></app-location>
 		<app-route
 		route="{{route}}"
-		pattern="/goodDetail/:page_id"
+		pattern="/:page_id"
 		data="{{routeData}}"
 		tail="{{subroute}}">
 	</app-route>
@@ -66,7 +66,7 @@
 		'_routePageChanged(routeData.page_id)'
 		],
 		_routePageChanged: function(route_page_id){
-			this.page_id = route_page_id;
+			this.page_id = route_page_id || 1;
 		},
 		load_complete: function(){
 			if (this.result.success) {
@@ -82,16 +82,16 @@
 			for(var key in goodInfo){
 				allVersions.push(goodInfo[key]);
 			}
-		}
+		},
 		properties:{
 			good: {
 				type: Object
 			},
 			page_id: {
-				type: String
+				type: Number
 			},
 			gid: {
-				type: String
+				type: Number
 			},
 			gname: {
 				type: String
