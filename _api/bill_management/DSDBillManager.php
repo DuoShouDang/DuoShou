@@ -44,7 +44,7 @@ class DSDBillManager {
         $price = 0;
         $result = DSDDatabaseConnector::get_first_match("select * from bill where bill_id=:bill_id", array("bill_id" => $bill_id));
         foreach (json_decode($result["info"], true) as $goods) {
-            $price += $goods["price"];
+            $price += $goods["number"] * $goods["price"];
         }
         return $price;
     }
