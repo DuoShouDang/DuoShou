@@ -37,7 +37,7 @@
             },
             register_completed: function(){
                 if(this.register_result.success){
-                    this.token=this.register_result.successInfo.token;
+                    this.token=this.register_result.successInfo;
                     alert("register succeed, token="+this.token);
                 }else{
                     alert(this.register_result.errorInfo);
