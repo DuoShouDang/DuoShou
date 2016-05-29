@@ -34,10 +34,10 @@
 				<template is="dom-repeat" items="{{cast_result.successInfo}}">
 					<paper-card class="item" heading="{{item.product_info.product_name}}">
 						<table border="0">
-							<td class="tdClass">{{getItemTypeName(item.info,item.sort_identifier)}}</td>
-							<td class="tdClass">{{item.product_info.price}}</td>
-							<td class="tdClass">{{item.number}}</td>
-							<td class="tdClass">{{mul(item.product_info.price,item.number)}}</td>
+							<td class="tdClass">型号  {{getItemTypeName(item.info,item.sort_identifier)}}</td>
+							<td class="tdClass">单价  {{item.product_info.price}}</td>
+							<td class="tdClass">件数  {{item.number}}</td>
+							<td class="tdClass">总价  {{mul(item.product_info.price,item.number)}}</td>
 						</table>
 					</paper-card>
 				</template>
