@@ -6,21 +6,31 @@
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
 
-<link rel="import" href="/bower_components/iron-validator-behavior/iron-validator-behavior.html">
+<link rel="import" href="/bower_components/paper-card/paper-card.html">
+<link rel="import" href="/bower_components/paper-toast/paper-toast.html">
 
 <dom-module id="dsd-register">
     <template>
-        <div class="main">
+        <style>
+            .content{
+                margin:auto auto;
+                display: block;
+                width: 400px;
+                margin-top: 100px;
+            }
+        </style>
+        <paper-card class="content" heading="注册剁手党">
 			<paper-input label="Email" auto-validate pattern="[a-zA-Z\-_\.\d]+@([a-zA-Z\d]*\.)+[a-zA-Z\d]+" error-message="请输入合法的邮箱地址" value="{{email}}"></paper-input>
             <paper-input label="用户名" auto-validate pattern=".{3,30}" error-message="用户名请在3-30个字节之间" maxlength=30 value="{{username}}"></paper-input>
             <paper-input label="密码" auto-validate pattern=".{6,}" error-message="密码不少于6位" value="{{password}}" type="password"></paper-input>
 			<paper-input label="重复密码" value="{{repeatpwd}}" invalid="{{validDoublePwd(password,repeatpwd)}}" error-message="请保证两次密码一致" type="password"></paper-input>
-            <paper-button on-tap="register" disabled="{{isInvalid(email, username, password, repeatpwd)}}">注册</paper-button>
-            <paper-button on-tap="jumpToLogin">登录</paper-button>
+            <br>
+			<paper-button on-tap="register" disabled="{{isInvalid(email, username, password, repeatpwd)}}">注册</paper-button>
+            <div align="right"><a href="/#/login/" >登录</a></div>
 
             <iron-ajax id="register_ajax" url="/api/account/register" method="POST" body="{{ajax_content}}" last-response="{{register_result}}" on-response="register_completed"></iron-ajax>
             <iron-localstorage name="token" value="{{token}}"></iron-localstorage>
-        </div>
+        </paper-card>
     </template>
 
     <script src="/script/md5.js"></script>
@@ -28,16 +38,13 @@
         Polymer({
             is: "dsd-register",
 									
-			jumpToLogin: function(){
-				window.location.href="/#/login/";
-			},
 			validDoublePwd:function(password,repeatpwd){
 				return password!=repeatpwd;
 			},
 			isInvalid: function(email, username, password, repeatpwd){
 				if(username.length<3){return true;}
 				if(username.length>30){return true;}
-				if(!((new RegExp("[a-zA-Z\-_\.\d]+@([a-zA-Z\d]*\.)+[a-zA-Z\d]+")).test(email))){return true;}
+				if(!((new RegExp("[a-zA-Z\\-_\\.\\d]+@([a-zA-Z\\d]*\\.)+[a-zA-Z\\d]+")).test(email))){return true;}
 				if(password.length<6){return true;}
 				if(repeatpwd!=password){return true;}
 				return false;
@@ -58,6 +65,7 @@
                 if(this.register_result.success){
                     this.token=this.register_result.successInfo;
                     alert("register succeed, token="+this.token);
+					window.location.href="/#/home/";
                 }else{
                     alert(this.register_result.errorInfo);
                 }

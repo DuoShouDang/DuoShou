@@ -9,9 +9,8 @@
   "admin/goods":"admin/modify",
   "admin/goods/:gid":"admin/modify",
 
-  "category":"category/get",
-
   "file/upload":"file/upload",
-  "file/:fhash":"file/modify"
+  "file/:fhash":"file/modify",
 
+  "bill":"bill/modify"
 }
