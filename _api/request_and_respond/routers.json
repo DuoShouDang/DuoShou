@@ -1,4 +1,5 @@
 {
+  "goods/random/:num":"goods/random",
   "goods/:gid":"goods/detail",
   "goods/all/:page/:num_per_page":"goods/all",
   "goods/category/:cid/:page/:num_per_page":"goods/category",
