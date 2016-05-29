@@ -5,16 +5,31 @@
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="/template/utils/dsd-authentication.html">
 
+<link rel="import" href="/template/goods/dsd-good-item.html">
+
 <dom-module id="dsd-goods">
     <template>
+        <style>
+            dsd-good-item{
+                width: 25%;
+            }
+        </style>
         <dsd-authentication token="{{token}}"></dsd-authentication>
+        <iron-ajax url="/api/goods/all/{{page}}/50" last-response="{{goods_result}}" auto></iron-ajax>
+
+        <template is="dom-repeat" items="{{goods_result.successInfo.goods}}">
+            <dsd-good-item model="{{item}}"></dsd-good-item>
+        </template>
     </template>
 
     <script>
         Polymer({
             is: "dsd-goods",
             properties:{
-
+                page:{
+                    type: Number,
+                    value: 0
+                }
             }
         });
 

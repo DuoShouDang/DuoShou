@@ -1,8 +1,26 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/template/goods/dsd-good-item.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 
 <dom-module id="dsd-home">
+    <style>
+        .heading{
+            --iron-image-width: 100%;
+        }
+        dsd-good-item{
+            display: block;
+            float: left;
+            width: 25%;
+        }
+    </style>
     <template>
-        <p>Hello world!</p>
+        <iron-image class="heading" src="/images/Shopping.jpg"></iron-image>
+        <iron-ajax url="/api/goods/all/0/4" last-response="{{goods}}" auto></iron-ajax>
+        <div>
+            <template is="dom-repeat" items="{{goods.successInfo.goods}}">
+                <dsd-good-item model="{{item}}"></dsd-good-item>
+            </template>
+        </div>
     </template>
 
     <script>
