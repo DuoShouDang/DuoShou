@@ -47,7 +47,7 @@
         <paper-toast id="tip">{{toast_msg}}</paper-toast>
 		
 		
-		<iron-ajax auto id="showcart_ajax" url="/api/shoppingcart" method="GET" last-response="{{cast_result}}" on-response="cast_completed"></iron-ajax>
+		<iron-ajax auto id="showcart_ajax" url="/api/shoppingcart" method="GET" header="{{showcart_auth}}" last-response="{{cast_result}}" on-response="cast_completed"></iron-ajax>
 
         <iron-ajax id="cashout_ajax" url="/api/bill" method="POST" body="{{ajax_content}}" last-response="{{cashout_result}}" on-response="cashout_completed"></iron-ajax>
         <dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
@@ -60,6 +60,9 @@
             observers:[
             ],
 			cast_completed:function(){
+				this.showcart_auth={
+					authentication: this.token
+				};
 				this.toast_msg="正在获取，请稍候...";
                 this.$.tip.open();
 				goods=cast_result;
