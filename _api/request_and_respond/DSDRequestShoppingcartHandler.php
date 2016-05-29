@@ -7,57 +7,43 @@
  * Time: 下午8:00
  */
 require_once "../request_and_respond/DSDRequestResponder.php";
-require_once "../utils/Utils.php";
-require_once "../data_management/DSDDatabaseConnector.php";
-require_once "../account_management/DSDAuthorizationChecker.php";
+require_once "../goods_management/DSDGoodsManager.php";
+require_once "../shoppingcart_management/DSDShoppingcartManager.php";
 
 class DSDRequestShoppingcartHandler{
-    public static function modify($gid, $sid){
-        if($_SERVER["REQUEST_METHOD"]=="PUT"){
-            DSDRequestResponder::respond(
-                DSDDatabaseConnector::update(
-                    "shopping_cart",
-                    Utils::filter($GLOBALS["data"], ["number!"]),
-                    "user_id=:uid AND good_id=:gid AND sort_identifier=:sid",
-                    array(
-                        ":uid"=>DSDAuthorizationChecker::getCurrentUid(),
-                        ":gid"=>$gid,
-                        ":sid"=>$sid
-                    )
-                )
-            );
-        }elseif($_SERVER["REQUEST_METHOD"]=="POST"){
-            DSDRequestResponder::respond(
-                DSDDatabaseConnector::insert(
-                    "shopping_cart",
-                    array(
-                        "user_id"=>DSDAuthorizationChecker::getCurrentUid(),
-                        "good_id"=>$gid,
-                        "number"=>@$GLOBALS["data"]["number"]?$GLOBALS["data"]["number"]:1
-                    )
-                )
-            );
-        }elseif($_SERVER["REQUEST_METHOD"]=="DELETE"){
-            DSDRequestResponder::respond(
-                DSDDatabaseConnector::write("delete from shopping_cart WHERE user_id=:uid AND good_id=:gid AND sort_identifier=:sid", array(
-                    ":uid"=>DSDAuthorizationChecker::getCurrentUid(),
-                    ":gid"=>$gid,
-                    ":sid"=>$sid
-                ))
-            );
+
+    public static function modify($gid, $sid) {
+        DSDAuthorizationChecker::ensureIam(DSDAccountManager::USER);
+        $goods = DSDGoodsManager::view_certain_goods($gid);
+        if (!$goods) {
+            DSDRequestResponder::http_code(404, false);
+            DSDRequestResponder::respond(false, "商品不存在");
+        }
+        if ($goods["info"][$sid] == null) {
+            DSDRequestResponder::http_code(404, false);
+            DSDRequestResponder::respond(false, "类别不存在");
+        }
+
+        if ($_SERVER["REQUEST_METHOD"]=="PUT") {
+            if (DSDShoppingcartManager::update($gid, $sid)) {
+                DSDRequestResponder::respond(true);
+            } else {
+                DSDRequestResponder::respond(false, "该商品未加入购物车或信息没有改动");
+            }
+        } else if($_SERVER["REQUEST_METHOD"]=="POST") {
+            Utils::ensureKeys($GLOBALS["data"], array("number"));
+            if (!DSDShoppingcartManager::add($gid, $sid)) {
+                DSDRequestResponder::respond(false, "该商品已加入购物车");
+            } else {
+                DSDRequestResponder::respond(true);
+            }
+        } else if($_SERVER["REQUEST_METHOD"]=="DELETE") {
+            DSDRequestResponder::respond(DSDShoppingcartManager::delete($gid, $sid));
         }
     }
-    public static function get(){
-        DSDRequestResponder::respond(true, null,
-            array_map(function($one){
-                $info=DSDDatabaseConnector::get_first_match("select name, info from goods WHERE gid=:gid", array(":gid"=>$one["good_id"]));
-                DSDGoodsManager::restore_info($info);
-                $one["product_info"]=array_merge($info["info"][$one["sort_identifier"]], array("product_name"=>$one["name"]));
-                $one["info"]=$info["info"];
-                return $one;
-            }, DSDDatabaseConnector::read("select good_id, sort_identifier, number from shopping_cart WHERE user_id=:uid",
-                array(":uid"=>DSDAuthorizationChecker::getCurrentUid()))
-            )
-        );
+
+    public static function get() {
+        DSDAuthorizationChecker::ensureIam(DSDAccountManager::USER);
+        DSDRequestResponder::respond(true, null, DSDShoppingcartManager::get());
     }
 }

@@ -52,7 +52,9 @@ class DSDGoodsManager {
 
     static function restore_info(&$goods) {
         $json = $goods["info"];
-        $goods["info"] = json_decode($json, true);
+        if (strlen($json) > 0) {
+            $goods["info"] = json_decode($json, true);
+        }
     }
 
     static function add_goods($name, $cid, $info, $abstract, $description) {
