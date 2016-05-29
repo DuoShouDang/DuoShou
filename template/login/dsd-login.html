@@ -26,7 +26,7 @@
             </div>
             <div class="card-actions">
                 <paper-button on-tap="login">登录</paper-button>
-                <paper-button>注册</paper-button>
+                <paper-button on-tap="register">注册</paper-button>
             </div>
         </paper-card>
 
@@ -52,6 +52,9 @@
                 this.toast_msg="正在登录...";
                 this.$.tip.open();
                 this.$.login_ajax.generateRequest();
+            },
+            register: function(){
+                window.location.href="/#/register";
             },
             login_completed: function(){
                 if(this.login_result.success){

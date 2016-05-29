@@ -60,7 +60,9 @@
             is: "dsd-header",
             jump: function(evt){
                 var value=evt.target.getAttribute("data");
-                window.location.href="/#/"+evt.target.getAttribute("data");
+                if(value){
+                    window.location.href="/#/"+evt.target.getAttribute("data");
+                }
             },
             properties:{
                 items:{
