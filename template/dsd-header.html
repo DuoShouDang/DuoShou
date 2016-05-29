@@ -15,14 +15,14 @@
             .logo{
                 width:70px;
                 height: 60px;
-                background-color: grey;
+                background-color: #DDD;
                 cursor: pointer;
             }
             .logo:hover{
                 background-color: salmon;
             }
-            paper-button{
-                color: grey;
+            paper-button, paper-icon-button{
+                color: #DDD;
             }
             paper-toolbar{
                 --paper-toolbar-background: black;
@@ -37,12 +37,13 @@
         <paper-header-panel class="flex">
             <paper-toolbar>
                 <iron-image class="logo" src="/images/logo.png" sizing="cover"></iron-image>
-                <template is="dom-repeat" items="{{items}}">
-                    <paper-button on-tap="jump" data="{{item.target}}"><iron-icon icon="{{item.icon}}"></iron-icon>&nbsp;&nbsp;{{item.name}}</paper-button>
-                </template>
+                <paper-button on-tap="jump" data="home"><iron-icon icon="home"></iron-icon>&nbsp;&nbsp;首页</paper-button>
+                <paper-button on-tap="jump" data="goods"><iron-icon icon="apps"></iron-icon>&nbsp;&nbsp;购物</paper-button>
+                <paper-button on-tap="jump" data="about"><iron-icon icon="info"></iron-icon>&nbsp;&nbsp;关于</paper-button>
                 <div class="title"></div>
                 <template is="dom-if" if="{{token}}">
-                    <paper-icon-button icon="account-circle"></paper-icon-button>
+                    <paper-icon-button icon="shopping-cart" on-tap="jump" data="shoppingcart"></paper-icon-button>
+                    <paper-icon-button icon="account-circle" on-tap="jump" data="orders"></paper-icon-button>
                 </template>
                 <template is="dom-if" if="{{!token}}">
                     <paper-button on-tap="jump" data="login"><iron-icon icon="account-box"></iron-icon>&nbsp;&nbsp;登录</paper-button>
