@@ -2,6 +2,7 @@
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="/bower_components/app-route/app-location.html">
 <link rel="import" href="/bower_components/app-route/app-route.html">
+<link rel="import" href="/bower_components/paper-toast/paper-toast.html">
 
 <dom-module id="dsd-goodDetail">
 	<template>
@@ -15,25 +16,25 @@
 	<div class="good-introduce">
 		<div class="good-preview">
 			<div class="preview-image">
-				<img src="/api/file/{{currentVersion.token}}" alt="{{currentVersion.name}}">
+				<img src="/api/file/{{currentObject.token}}" alt="{{currentObject.name}}">
 			</div>
 			<!-- <div class="gid">{{gid}}</div> -->
 		</div>
 		<div class="good-info">
 			<h1 class="good-name">{{gname}}</h1>
 			<div class="good-detail">{{gdescription}}</div>
-			<div class="good-price">价格：<span class="price">￥{{currentVersion.price}}</span></div>
+			<div class="good-price">价格：<span class="price">￥{{currentObject.price}}</span></div>
 			<div class="good-choose">
 				<div class="choose-version">
 					<span>选择：</span>
 					<template is="dom-repeat" items="{{gversions}}">
-						<a class="version" on-tap="_versionChanged">{{item.name}}</a>
+						<a class="version" on-tap="_versionChanged">{{item}}</a>
 					</template>
 				</div>
-				<div class="remain-count">还剩<span class="remain_number">{{currentVersion.remains}}</span>件</div>
+				<div class="remain-count">还剩<span class="remain_number">{{currentObject.remains}}</span>件</div>
 				<div class="set-number">
 					<span>购买件数：</span>
-					<input type="number" class="buy_number" name="number" min="1" max="{{currentVersion.remains}}" value="{{add_to_cart_number}}">
+					<input type="number" class="buy_number" name="number" min="1" max="{{currentObject.remains}}" value="{{add_to_cart_number}}">
 				</div>
 			</div>
 			<div class="good-buy">
@@ -43,10 +44,11 @@
 		</div>
 
 		<iron-ajax id="good_ajax" url="/api/goods/{{page_id}}" methos="GET" last-response="{{result}}" on-response="load_completed" auto></iron-ajax>
-		<iron-ajax id="add_to_cart_ajax" url="/api/shoppingcart/{{gid}}/{{currentVersion.token}}" method="POST" body="{{add_to_cart_number}}" last-response="{{add_result}}" on-response="add_completed"></iron-ajax>
+		<iron-ajax id="add_to_cart_ajax" url="/api/shoppingcart/{{gid}}/{{currentVersion}}" method="POST" headers="{{goods_detail_auth}}" body="{{add_to_cart_number}}" last-response="{{add_result}}" on-response="add_completed"></iron-ajax>
+		<dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
+		<paper-toast id="add_success">{{toast_msg}}</paper-toast>
 	</div>
 
-	<p>page_id: {{page_id}}, goodObject: {{result}}, allVersions: {{gversions}}, description: {{gdescription}}, currentVersion: {{currentVersion.name}} </p>
 	<style type="text/css">
 		.good-introduce{
 			margin-left: auto;
@@ -123,8 +125,13 @@
 	Polymer({
 		is: "dsd-goodDetail",
 		observers:[
-		'_routePageChanged(routeData.page_id)'
+		'_routePageChanged(routeData.page_id)', '_authChanged(token)'
 		],
+		_authChanged:function(token){
+				this.goods_detail_auth={
+					authorization: this.token
+				};
+			},
 		_routePageChanged: function(route_page_id){
 			this.page_id = route_page_id || 1;
 		},
@@ -140,16 +147,16 @@
 		},
 		add_completed: function(){
 			if(this.add_result.success){
-				var res = confirm("商品已成功加入购物车，\n您要进入购物车查看吗？");
-				if (res) {
-					window.location.href = "/shoppingCart";
-				}
+				this.toast_msg = "商品已成功加入购物车";
+			}else{
+				this.toast_msg = "商品加入购物车失败";
 			}
+			this.$.add_success.open();
 		},
 		_getAllVersions: function(goodInfo){
 			var allVersions = [];
 			for(var key in goodInfo){
-				allVersions.push(goodInfo[key]);
+				allVersions.push(key);
 			}
 			return allVersions;
 		},
@@ -160,6 +167,7 @@
 				this.gname = this.good.name;
 				this.gversions = this._getAllVersions(this.good.info);
 				this.currentVersion = this.gversions[0];
+				this.currentObject = this.good.info[this.currentVersion];
 				this.gdescription = this.good.description;
 			}
 		},
@@ -180,6 +188,9 @@
 				type: Array
 			},
 			currentVersion: {
+				type: String
+			},
+			currentObject: {
 				type: Object
 			},
 			gdescription: {
@@ -188,6 +199,9 @@
 			add_to_cart_number: {
 				type: Number,
 				value: 1
+			},
+			token: {
+				type: String
 			}
 		}
 	});
