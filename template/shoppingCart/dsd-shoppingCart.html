@@ -17,7 +17,7 @@
             .content{
                 margin:auto auto;
                 display: block;
-                width: 600px;
+                width: 800px;
                 margin-top: 100px;
             }
 			.item{
@@ -27,7 +27,7 @@
 				margin-top: 0px;
 			}
 			.tdClass{
-				width: 500px;
+				width: 600px;
 			}
         </style>
         <paper-card class="content" heading="购物车">
@@ -37,7 +37,7 @@
 						<table border="0">
 							<td class="tdClass">型号  {{getItemTypeName(item.info,item.sort_identifier)}}</td>
 							<td class="tdClass">单价  {{item.product_info.price}}</td>
-							<td class="tdClass">件数  {{item.number}}  <paper-icon-button icon="remove-circle-outline"></paper-icon-button><paper-icon-button icon="add-circle-outline"></paper-icon-button></td>
+							<td class="tdClass">件数  {{item.number}}  <paper-icon-button icon="remove-circle-outline" on-click="removeOne({{item}})"></paper-icon-button><paper-icon-button icon="add-circle-outline" on-click="addOne({{item}})"></paper-icon-button></td>
 							<td class="tdClass">总价  {{mul(item.product_info.price,item.number)}}</td>
 						</table>
 					</paper-card>
@@ -53,6 +53,8 @@
 		
 		
 		<iron-ajax auto id="showcart_ajax" url="/api/shoppingcart" method="GET" headers="{{showcart_auth}}" last-response="{{cast_result}}"></iron-ajax>
+		<iron-ajax id="deleteItem_ajax" url="/api/shoppingcart/{{item.good_id}}/{{item.sort_identifer}}" method="DELETE" headers="{{delItem_auth}}" last-response="{{delItem_result}}"></iron-ajax>
+		<iron-ajax id="putItem_ajax" url="/api/shoppingcart/{{item.good_id}}/{{item.sort_identifer}}" method="PUT" headers="{{delItem_auth}}" body="{{put_content}}" last-response="{{putItem_result}}"></iron-ajax>
 
         <iron-ajax id="cashout_ajax" url="/api/bill" method="POST" body="{{ajax_content}}" last-response="{{cashout_result}}" on-response="cashout_completed"></iron-ajax>
         <dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
@@ -83,6 +85,21 @@
             },
 			getItemTypeName(a,b){return a[b].name},
 			mul(a,b){return a*b;},
+			removeOne: function(item){
+				if(item.number==1){
+					this.$.deleteItem_ajax.generateRequest();
+					
+				}else{
+					item.number=item.number-1;
+					this.put_content={number:item.number};
+					this.$.putItem_ajax.generateRequest();
+				}
+			},
+			addOne: function(item){
+				item.number=item.number+1;
+				this.put_content={number:item.number};
+				this.$.putItem_ajax.generateRequest();				
+			},
             properties:{
                 username: {
                     type: String
