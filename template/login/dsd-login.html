@@ -1,0 +1,60 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
+
+<dom-module id="dsd-login">
+    <template>
+        <div class="main">
+            <paper-input label="用户名" value="{{username}}"></paper-input>
+            <paper-input label="密码" value="{{password}}" type="password"></paper-input>
+            <paper-button on-tap="login">登录</paper-button>
+            <paper-button>注册</paper-button>
+
+            <iron-ajax id="login_ajax" url="/api/account/login" method="POST" body="{{ajax_content}}" last-response="{{login_result}}" on-response="login_completed"></iron-ajax>
+            <iron-localstorage name="token" value="{{token}}"></iron-localstorage>
+        </div>
+    </template>
+
+    <script src="/script/md5.js"></script>
+    <script>
+        Polymer({
+            is: "dsd-login",
+            observers:[
+            ],
+            login: function(){
+                this.ajax_content=JSON.stringify({
+                    email: this.username,
+                    password: hex_md5(this.password)
+                });
+                this.$.login_ajax.generateRequest();
+            },
+            login_completed: function(){
+                if(this.login_result.success){
+                    this.token=this.login_result.successInfo.token;
+                    alert("login succeed, token="+this.token);
+                }else{
+                    alert(this.login_result.errorInfo);
+                }
+            },
+            properties:{
+                username: {
+                    type: String
+                },
+                password: {
+                    type: String
+                },
+                ajax_content: {
+                    type: String
+                },
+                token: {
+                    type: String
+                }
+            }
+        });
+
+    </script>
+</dom-module>
