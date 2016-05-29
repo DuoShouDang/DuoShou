@@ -8,7 +8,7 @@
 <link rel="import" href="/bower_components/paper-card/paper-card.html">
 <link rel="import" href="/bower_components/paper-toast/paper-toast.html">
 
-<link rel="import" href="/template/utils/dsd-authentication.html">
+<link rel="import" href="/template/utils/dsd-authorization.html">
 
 <dom-module id="dsd-shoppingCart">
     <template>
@@ -50,7 +50,7 @@
 		<iron-ajax auto id="showcart_ajax" url="/api/shoppingcart" method="GET" headers="{{showcart_auth}}" last-response="{{cast_result}}" on-response="cast_completed"></iron-ajax>
 
         <iron-ajax id="cashout_ajax" url="/api/bill" method="POST" body="{{ajax_content}}" last-response="{{cashout_result}}" on-response="cashout_completed"></iron-ajax>
-        <dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
+        <dsd-authorization token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authorization>
     </template>
 
     <script src="/script/md5.js"></script>
@@ -62,7 +62,7 @@
             ],
 			_authChanged:function(token){
 				this.showcart_auth={
-					authentication: this.token
+					authorization: this.token
 				};
 			},
             cashout: function(){
