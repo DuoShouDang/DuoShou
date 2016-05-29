@@ -26,14 +26,14 @@
 				margin-top: 0px;
 			}
 			.tdClass{
-				width: 100px;
+				width: 500px;
 			}
         </style>
         <paper-card class="content" heading="购物车">
             <div class="card-content">
 				<template is="dom-repeat" items="{{cast_result.successInfo}}">
 					<paper-card class="item" heading="{{item.product_info.product_name}}">
-						<table border="0" style="width:100px">
+						<table border="0">
 							<td class="tdClass">{{getItemTypeName(item.info,item.sort_identifier)}}</td>
 							<td class="tdClass">{{item.product_info.price}}</td>
 							<td class="tdClass">{{item.number}}</td>
