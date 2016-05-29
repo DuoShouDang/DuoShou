@@ -16,6 +16,8 @@
 
             <iron-ajax id="login_ajax" url="/api/account/login" method="POST" body="{{ajax_content}}" last-response="{{login_result}}" on-response="login_completed"></iron-ajax>
             <iron-localstorage name="token" value="{{token}}"></iron-localstorage>
+            <iron-localstorage name="username" value="{{verified_username}}"></iron-localstorage>
+            <iron-localstorage name="type" value="{{type}}"></iron-localstorage>
         </div>
     </template>
 
@@ -32,10 +34,14 @@
                 });
                 this.$.login_ajax.generateRequest();
             },
+            test: function(s){
+                return s.length % 2==0;
+            },
             login_completed: function(){
                 if(this.login_result.success){
                     this.token=this.login_result.successInfo.token;
-                    alert("login succeed, token="+this.token);
+                    this.verified_username=this.username;
+                    this.type=this.login_result.successInfo.type;
                 }else{
                     alert(this.login_result.errorInfo);
                 }
