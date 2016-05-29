@@ -46,3 +46,16 @@ CREATE TABLE IF NOT EXISTS duoshoudang.shopping_cart
   sort_identifier VARCHAR(20) NOT NULL,
   CONSTRAINT PRIMARY KEY (user_id, good_id, sort_identifier)
 );
+
+CREATE TABLE files
+(
+    fid INT(11) PRIMARY KEY NOT NULL,
+    fhash VARCHAR(64) NOT NULL,
+    owner_id INT(11) NOT NULL,
+    size INT(11) NOT NULL,
+    ext VARCHAR(20) NOT NULL,
+    create_time INT(11) NOT NULL,
+    modify_time INT(11),
+    file_name VARCHAR(50)
+);
+CREATE UNIQUE INDEX files_fhash_uindex ON files (fhash);
