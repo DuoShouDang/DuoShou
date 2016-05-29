@@ -1,0 +1,36 @@
+{
+  "name": "duoshoudang",
+  "authors": [
+    "x@xiongdianpku.com"
+  ],
+  "description": "duoshoudang",
+  "main": "index.html",
+  "keywords": [
+    "Duoshou"
+  ],
+  "license": "MIT",
+  "homepage": "https://www.duoshou.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "iron-elements": "PolymerElements/iron-elements#^1.0.0",
+    "page": "visionmedia/page.js#~1.6.4",
+    "paper-elements": "PolymerElements/paper-elements#^1.0.1",
+    "iron-pages": "PolymerElements/iron-pages#^1.0.7",
+    "iron-icons": "PolymerElements/iron-icons#^1.1.3",
+    "iron-ajax": "PolymerElements/iron-ajax#^1.2.0",
+    "iron-image": "PolymerElements/iron-image#^1.2.3",
+    "app-route": "PolymerElements/app-route#^0.9.1"
+  },
+  "resolutions": {
+    "polymer": "^1.0.0"
+  }
+}
+
