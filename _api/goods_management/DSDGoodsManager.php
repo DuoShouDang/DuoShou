@@ -45,6 +45,10 @@ class DSDGoodsManager {
     static function return_simplify_result($result, $total_page) {
         for ($i = 0; $i < count($result); $i++) {
             self::restore_info($result[$i]);
+            foreach ($result[$i]["info"] as $key => $value) {
+                $result[$i]["info"] = $value;
+                break;
+            }
             unset($result[$i]["description"]);
         }
         return array("goods" => $result, "total_page" => $total_page);
