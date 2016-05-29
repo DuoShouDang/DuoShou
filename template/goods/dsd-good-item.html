@@ -9,14 +9,50 @@
 
 <dom-module id="dsd-good-item">
     <template>
-        <paper-card>
-            {{model.name}}
+        <style>
+            .header {
+                @apply(--paper-font-headline);
+            }
+            .light { color: var(--paper-grey-600); }
+            .right {
+                float: right;
+                font-size: 15px;
+                vertical-align: middle;
+            }
+            paper-card{
+                width: 300px;
+                margin: 50px 10px;
+            }
+            .view{
+                background-color: #00acc1;
+                color: white;
+            }
+            paper-button{
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+        </style>
+        <paper-card image="/api/file/{{model.info.token}}">
+            <div class="card-content">
+                <p class="header">{{model.name}}</p>
+                <p class="light">￥{{model.info.price}}</p>
+                <p class="light">{{model.abstract}}</p>
+            </div>
+            <div class="card-actions">
+                <paper-button raised class="view" on-tap="viewDetail">查看</paper-button>
+            </div>
         </paper-card>
     </template>
 
     <script>
         Polymer({
             is: "dsd-good-item",
+            viewDetail: function(evt){
+                window.location.href="/#/goodDetail/"+this.model.gid;
+            },
+            addtocart: function(){
+
+            },
             properties:{
                 model:{
                     type: Object,

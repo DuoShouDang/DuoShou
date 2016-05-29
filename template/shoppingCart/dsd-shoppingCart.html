@@ -4,6 +4,7 @@
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/bower_components/iron-icon/iron-icon.html">
 
 <link rel="import" href="/bower_components/paper-card/paper-card.html">
 <link rel="import" href="/bower_components/paper-toast/paper-toast.html">
@@ -16,25 +17,28 @@
             .content{
                 margin:auto auto;
                 display: block;
-                width: 400px;
+                width: 600px;
                 margin-top: 100px;
             }
 			.item{
 				margin:auto auto;
 				display: block;
-				width: 360px;
+				width: 560px;
 				margin-top: 0px;
+			}
+			.tdClass{
+				width: 500px;
 			}
         </style>
         <paper-card class="content" heading="购物车">
             <div class="card-content">
 				<template is="dom-repeat" items="{{cast_result.successInfo}}">
-					<paper-card class="item" heading="{{item.info}}">
-						<table border=0>
-							<td>{{item.product_info.product_name}}</td>
-							<td>{{item.product_info.price}}</td>
-							<td>{{item.number}}</td>
-							<td>{{mul(item.product_info.price,item.number)}}</td>
+					<paper-card class="item" heading="{{item.product_info.product_name}}">
+						<table border="0">
+							<td class="tdClass">型号  {{getItemTypeName(item.info,item.sort_identifier)}}</td>
+							<td class="tdClass">单价  {{item.product_info.price}}</td>
+							<td class="tdClass">件数  {{item.number}}  <paper-icon-button icon="remove-circle-outline"></paper-icon-button><paper-icon-button icon="add-circle-outline"></paper-icon-button></td>
+							<td class="tdClass">总价  {{mul(item.product_info.price,item.number)}}</td>
 						</table>
 					</paper-card>
 				</template>
@@ -77,6 +81,7 @@
             cashout_completed: function(){
 				//TODO
             },
+			getItemTypeName(a,b){return a[b].name},
 			mul(a,b){return a*b;},
             properties:{
                 username: {

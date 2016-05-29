@@ -9,6 +9,7 @@
 <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
 
 <link rel="import" href="/template/dsd-header.html">
+<link rel="import" href="/template/dsd-footer.html">
 
 <dom-module id="dsd-app">
     <template>
@@ -25,8 +26,9 @@
 			<dsd-about name="about"></dsd-about>
             <dsd-goodDetail name="goodDetail"></dsd-goodDetail>
             <dsd-shoppingCart name="shoppingCart"></dsd-shoppingCart>
+            <dsd-goods name="goods"></dsd-goods>
         </iron-pages>
-
+        <dsd-footer></dsd-footer>
 
         <app-location route="{{route}}" use-hash-as-path></app-location>
         <app-route

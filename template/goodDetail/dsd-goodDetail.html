@@ -2,6 +2,7 @@
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="/bower_components/app-route/app-location.html">
 <link rel="import" href="/bower_components/app-route/app-route.html">
+<link rel="import" href="/bower_components/paper-toast/paper-toast.html">
 
 <dom-module id="dsd-goodDetail">
 	<template>
@@ -12,36 +13,48 @@
 		data="{{routeData}}"
 		tail="{{subroute}}">
 	</app-route>
-	<p>Data: {{routeData}}</p>
 	<div class="good-introduce">
 		<div class="good-preview">
-			<img src={{this.currentVersion.image}}>
-			<div class="gid">{{this.gid}}</div>
+			<div class="preview-image">
+				<img src="/api/file/{{currentObject.token}}" alt="{{currentObject.name}}">
+			</div>
+			<!-- <div class="gid">{{gid}}</div> -->
 		</div>
 		<div class="good-info">
-			<div class="good-name">{{this.gname}}</div>
-			<div class="good-detail">{{this.gdescription}}</div>
-			<div class="good-price">{{this.currentVersion.price}}</div>
+			<h1 class="good-name">{{gname}}</h1>
+			<div class="good-detail">{{gdescription}}</div>
+			<div class="good-price">价格：<span class="price">￥{{currentObject.price}}</span></div>
 			<div class="good-choose">
-				<template class="choose-version" is="dom-repeat" items="{{this.gversions}}">
-					<a href="">{{item.name}}</a>
-				</template>
-				<div class="remain-count">{{this.currentVersion.remains}}</div>
+				<div class="choose-version">
+					<span>选择：</span>
+					<template is="dom-repeat" items="{{gversions}}">
+						<a class="version" on-tap="_versionChanged">{{item}}</a>
+					</template>
+				</div>
+				<div class="remain-count">还剩<span class="remain_number">{{currentObject.remains}}</span>件</div>
+				<div class="set-number">
+					<span>购买件数：</span>
+					<input type="number" class="buy_number" name="number" min="1" max="{{currentObject.remains}}" value="{{add_to_cart_number}}">
+				</div>
 			</div>
 			<div class="good-buy">
-				<a href="">立即购买</a>
-				<a href="">加入购物车</a>
+				<paper-button class="buy-now" on-tap="_buyNowPressed" raised>立即购买</paper-button>
+				<paper-button class="add-to-cart" on-tap="_addToCartPressed" raised>加入购物车</paper-button>
 			</div>
 		</div>
 
-		<iron-ajax id="good_ajax" url="/api/goods/"+this.page_id methos="GET" body="{{good}}" last-response="{{result}}" on-response="load_complete"></iron-ajax>
+		<iron-ajax id="good_ajax" url="/api/goods/{{page_id}}" methos="GET" last-response="{{result}}" on-response="load_completed" auto></iron-ajax>
+		<iron-ajax id="add_to_cart_ajax" url="/api/shoppingcart/{{gid}}/{{currentVersion}}" method="POST" headers="{{goods_detail_auth}}" body="{{add_to_cart_number}}" last-response="{{add_result}}" on-response="add_completed"></iron-ajax>
+		<dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
+		<paper-toast id="add_success">{{toast_msg}}</paper-toast>
+		<p>/api/shoppingcart/{{gid}}/{{currentVersion}}, {{good_detail_auth}}, {{add_to_cart_number}}</p>
 	</div>
-	<p>page_id: {{this.page_id}}, goodObject: {{this.good}}, allVersions: {{this.gversions}}, description: {{this.gdescription}}, currentVersion: {{this.currentVersion}} </p>
 
 	<style type="text/css">
 		.good-introduce{
 			margin-left: auto;
 			margin-right: auto;
+			margin-top: 30px;
 			width: 80%;
 			height: 600px;
 		}
@@ -49,13 +62,63 @@
 			width: 35%;
 			height: inherit;
 			float: left;
-			background-color: gray;
+			/*background-color: gray;*/
+		}
+		.preview-image{
+			margin: auto;
+		}	
+		.preview-image img{
+			width: 100%;
 		}
 		.good-info{
-			width: 65%;
+			width: 60%;
 			height: inherit;
+			padding: 0 2%;
 			float: right;
-			background-color: lightgray;
+			/*background-color: lightgray;*/
+		}
+		.good-price{
+			margin: 20px 0;
+		}
+		.price{
+			color: #E4393C;
+			font-size: 24px;
+			font-weight: bold;
+		}
+		.good-choose{
+			margin: 30px 0;
+		}
+		.good-choose div{
+			margin: 20px 0;
+		}
+		.version{
+			padding: 5px 10px;
+			border: solid 2px;
+			border-color: gray;
+			cursor: pointer;
+		}
+		.version:hover{
+			border-color: #E4393C;
+		}
+		.remain_number{
+			color: salmon;
+			font-weight: bold;
+			margin: 0 5px;
+		}
+		.buy_number{
+			width: 50px;
+			height: 25px;
+			font-size: 18px;
+			padding: 0 5px;
+		}
+		.buy-now{
+			margin-left: 0;
+			font-weight: bold;
+			color: #E4393C;
+		}
+		.add-to-cart{
+			font-weight: bold;
+			color: salmon;
 		}
 	</style>
 </template>
@@ -64,24 +127,53 @@
 	Polymer({
 		is: "dsd-goodDetail",
 		observers:[
-		'_routePageChanged(routeData.page_id)'
+		'_routePageChanged(routeData.page_id)', '_authChanged(token)'
 		],
+		_authChanged:function(token){
+			this.goods_detail_auth = {
+				authorization: this.token
+			};
+			alert(this.token);
+		},
 		_routePageChanged: function(route_page_id){
 			this.page_id = route_page_id || 1;
 		},
-		load_complete: function(){
-			if (this.result.success) {
-				this.gid = good.gid;
-				this.gname = good.name;
-				this.gversions = _getAllVersions(good.info);
-				this.currentVersion = this.gversions[0];
-				this.gdescription = good.description;
+		_versionChanged: function(evt){
+			var newVersion = evt.model.item;
+			this.currentVersion = newVersion;
+			this.currentObject = this.good.info[this.currentVersion];
+		},
+		_buyNowPressed: function(evt){
+			window.location.href = "/#/shoppingCart";
+		},
+		_addToCartPressed: function(evt){
+			this.$.add_to_cart_ajax.generateRequest();
+		},
+		add_completed: function(){
+			alert(this.add_result.successInfo);
+			if(this.add_result.success){
+				this.toast_msg = "商品已成功加入购物车";
+			}else{
+				this.toast_msg = "商品加入购物车失败";
 			}
+			this.$.add_success.open();
 		},
 		_getAllVersions: function(goodInfo){
 			var allVersions = [];
 			for(var key in goodInfo){
-				allVersions.push(goodInfo[key]);
+				allVersions.push(key);
+			}
+			return allVersions;
+		},
+		load_completed: function(){
+			if (this.result.success) {
+				this.good = this.result.successInfo;
+				this.gid = this.good.gid;
+				this.gname = this.good.name;
+				this.gversions = this._getAllVersions(this.good.info);
+				this.currentVersion = this.gversions[0];
+				this.currentObject = this.good.info[this.currentVersion];
+				this.gdescription = this.good.description;
 			}
 		},
 		properties:{
@@ -101,9 +193,19 @@
 				type: Array
 			},
 			currentVersion: {
+				type: String
+			},
+			currentObject: {
 				type: Object
 			},
 			gdescription: {
+				type: String
+			},
+			add_to_cart_number: {
+				type: Number,
+				value: 1
+			},
+			token: {
 				type: String
 			}
 		}
