@@ -31,6 +31,7 @@
 				<template is="dom-repeat" items="{{cast_result.successInfo}}">
 					<paper-card class="item" heading={{item.info.name}}>
 						<table border=0>
+							<td>{{item.product_info.name}}</td>
 							<td>{{item.product_info.price}}</td>
 							<td>{{item.number}}</td>
 							<td>{{mul(item.product_info.price,item.number)}}</td>
