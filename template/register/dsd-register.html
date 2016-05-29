@@ -29,7 +29,7 @@
             <br>
 			<div class="card-actions">
 				<paper-button on-tap="register" disabled="{{isInvalid(email, username, password, repeatpwd)}}" raised>注册</paper-button>
-				<paper-button on-tap="jumpToLogin">登录</paper-button>
+				<paper-button on-tap="jumpToLogin" raised>登录</paper-button>
 			</div>
 
             <iron-ajax id="register_ajax" url="/api/account/register" method="POST" body="{{ajax_content}}" last-response="{{register_result}}" on-response="register_completed"></iron-ajax>
