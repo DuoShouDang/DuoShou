@@ -28,7 +28,7 @@
         </style>
         <paper-card class="content" heading="购物车">
             <div class="card-content">
-				<template is="dom-repeat" items="{{goods}}">
+				<template is="dom-repeat" items="{{cast_result.successInfo}}">
 					<paper-card class="item" heading={{item.name}}>
 						<table border=0>
 							<td>{{item.productinfo.price}}</td>
@@ -58,14 +58,12 @@
         Polymer({
             is: "dsd-shoppingCart",
             observers:[
+			'_authChanged(token)'
             ],
-			cast_completed:function(){
+			_authChanged:function(token){
 				this.showcart_auth={
 					authentication: this.token
 				};
-				this.toast_msg="正在获取，请稍候...";
-                this.$.tip.open();
-				goods=cast_result;
 			},
             cashout: function(){
                 this.ajax_content=JSON.stringify({
