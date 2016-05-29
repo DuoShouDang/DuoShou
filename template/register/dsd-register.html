@@ -25,7 +25,7 @@
             <paper-input label="密码" auto-validate pattern=".{6,}" error-message="密码不少于6位" value="{{password}}" type="password"></paper-input>
 			<paper-input label="重复密码" value="{{repeatpwd}}" invalid="{{validDoublePwd(password,repeatpwd)}}" error-message="请保证两次密码一致" type="password"></paper-input>
             <paper-button on-tap="register" disabled="{{isInvalid(email, username, password, repeatpwd)}}">注册</paper-button>
-            <paper-button on-tap="jumpToLogin">登录</paper-button>
+            <div align="right"><a href="/#/login/" >登录</a></div>
 
             <iron-ajax id="register_ajax" url="/api/account/register" method="POST" body="{{ajax_content}}" last-response="{{register_result}}" on-response="register_completed"></iron-ajax>
             <iron-localstorage name="token" value="{{token}}"></iron-localstorage>
@@ -37,9 +37,6 @@
         Polymer({
             is: "dsd-register",
 									
-			jumpToLogin: function(){
-				window.location.href="/#/login/";
-			},
 			validDoublePwd:function(password,repeatpwd){
 				return password!=repeatpwd;
 			},
