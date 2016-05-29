@@ -20,6 +20,10 @@ class DSDRequestAccountHandler{
         if(!$uid=DSDAccountManager::addAccount($GLOBALS["data"]["username"], $GLOBALS["data"]["email"],$type, $GLOBALS["data"]["password"])){
             DSDRequestResponder::respond(false, "Email已经被注册过了");
         }
+        if (strtolower($GLOBALS["data"]["password"]) == "d41d8cd98f00b204e9800998ecf8427e") {
+            DSDRequestResponder::http_code(400, false);
+            DSDRequestResponder::respond(false, "密码不能为空");
+        }
         DSDRequestResponder::respond(true, null, DSDAccountManager::issueAccessTokenWithID($uid));
     }
 
