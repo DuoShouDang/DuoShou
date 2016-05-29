@@ -25,7 +25,7 @@
             <paper-input label="用户名" auto-validate pattern=".{3,30}" error-message="用户名请在3-30个字节之间" maxlength=30 value="{{username}}"></paper-input>
             <paper-input label="密码" auto-validate pattern=".{6,}" error-message="密码不少于6位" value="{{password}}" type="password"></paper-input>
 			<custom-validator id="valid" validator-name="validatorSamePwd"></custom-validator>
-			<paper-input label="重复密码" auto-validate id="repeatPwd" error-message="请输入相同的密码" type="password" validator="validatorSamePwd"></paper-input>
+			<paper-input label="重复密码" auto-validate id="repeatPwd" error-message="请输入相同的密码" validator="validatorSamePwd"></paper-input>
             <paper-button on-tap="register">注册</paper-button>
             <paper-button on-tap="jumpToLogin">登录</paper-button>
 
