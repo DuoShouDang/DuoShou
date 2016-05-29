@@ -15,7 +15,7 @@
     </style>
     <template>
         <iron-image class="heading" src="/images/Shopping.jpg"></iron-image>
-        <iron-ajax url="/api/goods/all/0/4" last-response="{{goods}}" auto></iron-ajax>
+        <iron-ajax url="/api/goods/random/4" last-response="{{goods}}" auto></iron-ajax>
         <div>
             <template is="dom-repeat" items="{{goods.successInfo.goods}}">
                 <dsd-good-item model="{{item}}"></dsd-good-item>
