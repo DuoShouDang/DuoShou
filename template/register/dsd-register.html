@@ -9,7 +9,7 @@
 <dom-module id="dsd-register">
     <template>
         <div class="main">
-			<paper-input label="Email" auto-validate pattern="[a-zA-Z-_\.\d]*@[a-zA-Z\d]*\.[a-zA-Z\d\.]*" error-message="请输入合法的邮箱地址" value="{{email}}"></paper-input>
+			<paper-input label="Email" auto-validate pattern="[a-zA-Z\-_\.\d]+@([a-zA-Z\d]*\.)+[a-zA-Z\d]*" error-message="请输入合法的邮箱地址" value="{{email}}"></paper-input>
             <paper-input label="用户名" value="{{username}}"></paper-input>
             <paper-input label="密码" value="{{password}}" type="password"></paper-input>
             <paper-button on-tap="register">注册</paper-button>
