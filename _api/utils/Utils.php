@@ -39,7 +39,6 @@ class Utils {
         return date("Y-m-d",$timestamp);
     }
     static function strMatchReg($str, $reg){
-        var_dump($str, $reg, @preg_match('#' . $reg . '#', $str));
         return @preg_match('#' . $reg . '#', $str) == 0 ? false : true;
     }
     static function http($url, $method, $postfields = NULL, $header=FALSE, $cookie=NULL,$proxy=NULL, $auth=NULL) {
