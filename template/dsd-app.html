@@ -1,0 +1,53 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+
+<dom-module id="dsd-app">
+    <template>
+        <style type="text/css">
+        </style>
+        <app-location route="{{route}}" use-hash-as-path></app-location>
+        <app-route
+                route="{{route}}"
+                pattern="/:page"
+                data="{{routeData}}"
+                tail="{{subroute}}"></app-route>
+        <iron-localstorage name="auth"
+                           value="{{token}}"
+                           on-iron-localstorage-load-empty=""></iron-localstorage>
+        <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
+        </iron-pages>
+    </template>
+
+    <script>
+        Polymer({
+            is: "dsd-app",
+            // add a callback to the element's prototype
+            observers: [
+                '_routePageChanged(routeData.page)'
+            ],
+            _routePageChanged: function(page) {
+                this.page = page || 'home';
+            },
+            _authChanged: function(token){
+                this.token = token;
+            },
+            _pageChanged: function(page) {
+                // load page import on demand.
+                this.importHref(this.resolveUrl('/template/dsd-app-' + page + '.html'), null, null, true);
+            },
+            properties:{
+                page: {
+                    type: String,
+                    reflectToAttribute: true,
+                    observer: '_pageChanged'
+                }
+            }
+        });
+
+    </script>
+</dom-module>
