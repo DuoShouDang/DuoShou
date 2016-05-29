@@ -16,13 +16,13 @@
             .content{
                 margin:auto auto;
                 display: block;
-                width: 400px;
+                width: 600px;
                 margin-top: 100px;
             }
 			.item{
 				margin:auto auto;
 				display: block;
-				width: 360px;
+				width: 560px;
 				margin-top: 0px;
 			}
         </style>
@@ -30,7 +30,7 @@
             <div class="card-content">
 				<template is="dom-repeat" items="{{cast_result.successInfo}}">
 					<paper-card class="item" heading="{{item.product_info.product_name}}">
-						<table border=0>
+						<table border=0 width=100>
 							<td>{{getItemTypeName(item.info,item.sort_identifier)}}</td>
 							<td>{{item.product_info.price}}</td>
 							<td>{{item.number}}</td>
