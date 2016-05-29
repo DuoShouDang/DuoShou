@@ -29,9 +29,9 @@
         <paper-card class="content" heading="购物车">
             <div class="card-content">
 				<template is="dom-repeat" items="{{cast_result.successInfo}}">
-					<paper-card class="item" heading="{{item.info}}">
+					<paper-card class="item" heading="{{item.product_info.product_name}}">
 						<table border=0>
-							<td>{{item.product_info.product_name}}</td>
+							<td>{{getItemTypeName(item.info,item.sort_identifier)}}</td>
 							<td>{{item.product_info.price}}</td>
 							<td>{{item.number}}</td>
 							<td>{{mul(item.product_info.price,item.number)}}</td>
@@ -77,6 +77,7 @@
             cashout_completed: function(){
 				//TODO
             },
+			getItemTypeName(a,b){return a.b.name;},
 			mul(a,b){return a*b;},
             properties:{
                 username: {
