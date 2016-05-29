@@ -1,10 +1,12 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/polymer/polymer.html">
 
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 
-<link rel="import" href="../bower_components/app-route/app-location.html">
-<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="/bower_components/app-route/app-location.html">
+<link rel="import" href="/bower_components/app-route/app-route.html">
+
+<link rel="import" href="/template/home/dsd-home.html">
 
 <dom-module id="dsd-app">
     <template>
@@ -20,6 +22,8 @@
                            value="{{token}}"
                            on-iron-localstorage-load-empty=""></iron-localstorage>
         <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
+            <dsd-home name="home"></dsd-home>
+            <dsd-goods name="goods"></dsd-goods>
         </iron-pages>
     </template>
 
