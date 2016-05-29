@@ -29,7 +29,7 @@
             <br>
 			<div class="card-actions">
 				<paper-button on-tap="register" disabled="{{isInvalid(email, username, password, repeatpwd)} raised}">注册</paper-button>
-				<div align="right"><a href="/#/login/" >登录</a></div>
+				<paper-button on-tap="jumpToLogin">登录</paper-button>
 			</div>
 
             <iron-ajax id="register_ajax" url="/api/account/register" method="POST" body="{{ajax_content}}" last-response="{{register_result}}" on-response="register_completed"></iron-ajax>
@@ -41,6 +41,10 @@
     <script>
         Polymer({
             is: "dsd-register",
+									
+			jumpToLogin: function(){
+				window.location.href="/#/login/";
+			},
 									
 			validDoublePwd:function(password,repeatpwd){
 				return password!=repeatpwd;
