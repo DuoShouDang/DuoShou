@@ -59,6 +59,7 @@
         Polymer({
             is: "dsd-header",
             jump: function(evt){
+                var value=evt.target.getAttribute("data");
                 window.location.href="/#/"+evt.target.getAttribute("data");
             },
             properties:{
