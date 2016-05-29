@@ -1,6 +1,5 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 
-<link rel="import" href="/bower_components/paper-input/paper-input.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
@@ -10,7 +9,7 @@
 
 <link rel="import" href="/template/utils/dsd-authentication.html">
 
-<dom-module id="dsd-login">
+<dom-module id="dsd-shoppingCart">
     <template>
         <style>
             .content{
@@ -20,19 +19,18 @@
                 margin-top: 100px;
             }
         </style>
-        <paper-card class="content" heading="登录剁手党">
+        <paper-card class="content" heading="购物车">
             <div class="card-content">
 				
             </div>
             <div class="card-actions">
-                <paper-button on-tap="login">登录</paper-button>
-                <paper-button on-tap="register">注册</paper-button>
+                <paper-button on-tap="cashout">去结算</paper-button>
             </div>
         </paper-card>
 
         <paper-toast id="tip">{{toast_msg}}</paper-toast>
 
-        <iron-ajax id="login_ajax" url="/api/account/login" method="POST" body="{{ajax_content}}" last-response="{{login_result}}" on-response="login_completed"></iron-ajax>
+        <iron-ajax id="cashout_ajax" url="/api/bill" method="POST" body="{{ajax_content}}" last-response="{{cashout_result}}" on-response="cashout_completed"></iron-ajax>
         <dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
     </template>
 
@@ -42,36 +40,19 @@
             is: "dsd-shoppingCart",
             observers:[
             ],
-            login: function(){
+            cashout: function(){
                 this.ajax_content=JSON.stringify({
-                    email: this.username,
-                    password: hex_md5(this.password)
+					// TODO
                 });
-                this.toast_msg="正在登录...";
+                this.toast_msg="正在跳转，请稍候...";
                 this.$.tip.open();
                 this.$.login_ajax.generateRequest();
             },
-            register: function(){
-                window.location.href="/#/register";
-            },
-            login_completed: function(){
-                if(this.login_result.success){
-                    this.token=this.login_result.successInfo.token;
-                    this.verified_username=this.username;
-                    this.type=this.login_result.successInfo.type;
-                    this.toast_msg="登录成功";
-                    this.$.tip.open();
-                    window.location.href="/#/home";
-                }else{
-                    this.toast_msg=this.login_result.errorInfo;
-                    this.$.tip.open();
-                }
+            cashout_completed: function(){
+				//TODO
             },
             properties:{
                 username: {
-                    type: String
-                },
-                password: {
                     type: String
                 },
                 ajax_content: {
