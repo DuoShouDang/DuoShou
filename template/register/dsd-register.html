@@ -33,7 +33,7 @@
 			</div>
 
             <iron-ajax id="register_ajax" url="/api/account/register" method="POST" body="{{ajax_content}}" last-response="{{register_result}}" on-response="register_completed"></iron-ajax>
-            <dsd-authorization token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authorization>
+            <dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
         </paper-card>
 		<paper-toast id="tip">{{toast_msg}}</paper-toast>
     </template>
