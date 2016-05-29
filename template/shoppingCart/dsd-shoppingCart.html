@@ -1,5 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
@@ -18,10 +19,25 @@
                 width: 400px;
                 margin-top: 100px;
             }
+			.item{
+				margin:auto auto;
+				display: block;
+				width: 360px;
+				margin-top: 0px;
+			}
         </style>
         <paper-card class="content" heading="购物车">
             <div class="card-content">
-				
+				<template is="dom-repeat" items="{{goods}}">
+					<paper-card class="item" heading={{item.name}}>
+						<table border=0>
+							<td>{{item.productinfo.price}}</td>
+							<td>{{item.number}}</td>
+							<td>{{mul(item.productinfo.price,item.number)}}</td>
+						</table>
+					</paper-card>
+				</template>
+			
             </div>
             <div class="card-actions">
                 <paper-button on-tap="cashout">去结算</paper-button>
@@ -29,6 +45,9 @@
         </paper-card>
 
         <paper-toast id="tip">{{toast_msg}}</paper-toast>
+		
+		
+		<iron-ajax auto id="showcart_ajax" url="/api/shoppingcart" method="GET" last-response="{{cast_result}}" on-response="cast_completed"></iron-ajax>
 
         <iron-ajax id="cashout_ajax" url="/api/bill" method="POST" body="{{ajax_content}}" last-response="{{cashout_result}}" on-response="cashout_completed"></iron-ajax>
         <dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
@@ -40,17 +59,23 @@
             is: "dsd-shoppingCart",
             observers:[
             ],
+			cast_completed:function(){
+				this.toast_msg="正在获取，请稍候...";
+                this.$.tip.open();
+				goods=cast_result;
+			},
             cashout: function(){
                 this.ajax_content=JSON.stringify({
 					// TODO
                 });
                 this.toast_msg="正在跳转，请稍候...";
                 this.$.tip.open();
-                this.$.login_ajax.generateRequest();
+                this.$.cashout_ajax.generateRequest();
             },
             cashout_completed: function(){
 				//TODO
             },
+			mul(a,b){return a*b;},
             properties:{
                 username: {
                     type: String
