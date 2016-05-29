@@ -47,6 +47,7 @@
 		<iron-ajax id="add_to_cart_ajax" url="/api/shoppingcart/{{gid}}/{{currentVersion}}" method="POST" headers="{{goods_detail_auth}}" body="{{add_to_cart_number}}" last-response="{{add_result}}" on-response="add_completed"></iron-ajax>
 		<dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
 		<paper-toast id="add_success">{{toast_msg}}</paper-toast>
+		<p>/api/shoppingcart/{{gid}}/{{currentVersion}}, {{good_detail_auth}}, {{add_to_cart_number}}</p>
 	</div>
 
 	<style type="text/css">
@@ -111,6 +112,7 @@
 			padding: 0 5px;
 		}
 		.buy-now{
+			margin-left: 0;
 			font-weight: bold;
 			color: #E4393C;
 		}
@@ -128,24 +130,27 @@
 		'_routePageChanged(routeData.page_id)', '_authChanged(token)'
 		],
 		_authChanged:function(token){
-				this.goods_detail_auth={
-					authorization: this.token
-				};
-			},
+			this.goods_detail_auth = {
+				authorization: this.token
+			};
+			alert(this.token);
+		},
 		_routePageChanged: function(route_page_id){
 			this.page_id = route_page_id || 1;
 		},
 		_versionChanged: function(evt){
 			var newVersion = evt.model.item;
 			this.currentVersion = newVersion;
+			this.currentObject = this.good.info[this.currentVersion];
 		},
 		_buyNowPressed: function(evt){
-
+			window.location.href = "/#/shoppingCart";
 		},
 		_addToCartPressed: function(evt){
 			this.$.add_to_cart_ajax.generateRequest();
 		},
 		add_completed: function(){
+			alert(this.add_result.successInfo);
 			if(this.add_result.success){
 				this.toast_msg = "商品已成功加入购物车";
 			}else{
