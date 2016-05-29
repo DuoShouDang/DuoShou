@@ -16,7 +16,7 @@ class DSDRequestAccountHandler{
     }
 
     public static function registerAccount($type){
-        if (!Utils::is_email($GLOBALS["data"]["password"])) {
+        if (!Utils::is_email($GLOBALS["data"]["email"])) {
             DSDRequestResponder::respond(false, "Email格式错误");
         }
         if (strtolower($GLOBALS["data"]["password"]) == "d41d8cd98f00b204e9800998ecf8427e") {
