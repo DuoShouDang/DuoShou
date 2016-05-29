@@ -6,12 +6,16 @@
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
 
+<link rel="import" href="custom-validator.html">
+
 <dom-module id="dsd-register">
     <template>
         <div class="main">
 			<paper-input label="Email" auto-validate pattern="[a-zA-Z\-_\.\d]+@([a-zA-Z\d]*\.)+[a-zA-Z\d]+" error-message="请输入合法的邮箱地址" value="{{email}}"></paper-input>
-            <paper-input label="用户名" value="{{username}}"></paper-input>
-            <paper-input label="密码" value="{{password}}" type="password"></paper-input>
+            <paper-input label="用户名" auto-validate pattern=".{3,30}" error-message="用户名请在3-30个字节之间" maxlength=30 value="{{username}}"></paper-input>
+            <paper-input label="密码" auto-validate pattern=".{6,}" error-message="密码不少于6位" value="{{password}}" type="password"></paper-input>
+			<custom-validator id="valid1" validator-name="validatorSamePwd"></custom-validator>
+			<paper-input label="重复密码" auto-validate id="repeatPwd" error-message="请输入相同的密码" type="password" validator="validatorSamePwd"></paper-input>
             <paper-button on-tap="register">注册</paper-button>
             <paper-button on-tap="jumpToLogin">登录</paper-button>
 
@@ -24,6 +28,13 @@
     <script>
         Polymer({
             is: "dsd-register",
+			
+			validateSamePwd: function(value) {
+				//validation code
+				console.log("validateSamePwd");
+				return value == this.password;
+			},
+			
 			jumpToLogin: function(){
 				window.location.href="/#/login/";
 			},

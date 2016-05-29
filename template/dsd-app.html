@@ -6,12 +6,24 @@
 <link rel="import" href="/bower_components/app-route/app-location.html">
 <link rel="import" href="/bower_components/app-route/app-route.html">
 
-<link rel="import" href="/template/home/dsd-home.html">
+<link rel="import" href="/template/dsd-header.html">
+
 
 <dom-module id="dsd-app">
     <template>
         <style type="text/css">
+
         </style>
+
+        <dsd-header></dsd-header>
+        <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
+            <dsd-home name="home"></dsd-home>
+            <dsd-goods name="goods"></dsd-goods>
+            <dsd-login name="login"></dsd-login>
+            <dsd-register name="register"></dsd-register>
+        </iron-pages>
+
+
         <app-location route="{{route}}" use-hash-as-path></app-location>
         <app-route
                 route="{{route}}"
@@ -21,12 +33,6 @@
         <iron-localstorage name="auth"
                            value="{{token}}"
                            on-iron-localstorage-load-empty=""></iron-localstorage>
-        <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
-            <dsd-home name="home"></dsd-home>
-            <dsd-goods name="goods"></dsd-goods>
-            <dsd-login name="login"></dsd-login>
-            <dsd-register name="register"></dsd-register>
-        </iron-pages>
     </template>
 
     <script>
