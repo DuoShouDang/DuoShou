@@ -29,11 +29,11 @@
         <paper-card class="content" heading="购物车">
             <div class="card-content">
 				<template is="dom-repeat" items="{{cast_result.successInfo}}">
-					<paper-card class="item" heading={{item.name}}>
+					<paper-card class="item" heading={{item.info.name}}>
 						<table border=0>
-							<td>{{item.productinfo.price}}</td>
+							<td>{{item.product_info.price}}</td>
 							<td>{{item.number}}</td>
-							<td>{{mul(item.productinfo.price,item.number)}}</td>
+							<td>{{mul(item.product_info.price,item.number)}}</td>
 						</table>
 					</paper-card>
 				</template>
