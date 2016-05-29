@@ -1,0 +1,105 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" 
+href="/bower_components/paper-input/paper-input.html">
+<link rel="import" 
+href="/bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" 
+href="/bower_components/iron-localstorage/iron-localstorage.html">
+<dom-module id="dsd-about">
+    <template>
+        <paper-card heading="关于我们" image=./back.png" class="white">
+		<div class="card-content">我们是北京大学计算机双学位学生，软件工程大作业完成了这个网络购物平台。</div>
+		
+<style is="custom-style">
+  paper-card.namecard { @apply(--layout-horizontal); }
+  .namecard-image {
+    width: 100px;
+    height: 170px;
+    background: url('./back.png');
+    background-size: cover;
+  }
+  .namecard-content {
+    @apply(--layout-flex);
+    float: left;
+  }
+  .namecard-header { @apply(--paper-font-headline); }
+  .namecard-name { color: var(--paper-grey-600); margin: 10px 0; }
+</style>
+
+<paper-card class="namecard">
+  <div class="namecard-content">
+    <div class="card-content">
+      <div class="name">熊典</div>
+      <div class="info">北京大学法学院大四本科生</div>    
+    </div>
+  </div>
+  <div class="namecard-image"><image src="1.png"</div>
+</paper-card>
+		
+<paper-card class="namecard">
+  <div class="namecard-content">
+    <div class="card-content">
+      <div class="name">范志康</div>
+      <div class="info">北京大学信息科学技术学院大三本科生</div>    
+    </div>
+  </div>
+  <div class="namecard-image"></div>
+</paper-card>
+
+<paper-card class="namecard">
+  <div class="namecard-content">
+    <div class="card-content">
+      <div class="name">朱赫</div>
+      <div class="info">北京大学地球与空间环境学院大三本科生</div>    
+    </div>
+  </div>
+  <div class="namecard-image"></div>
+</paper-card>
+
+<paper-card class="namecard">
+  <div class="namecard-content">
+    <div class="card-content">
+      <div class="name">夏泽清</div>
+      <div class="info">北京大学元培学院大三本科生</div>    
+    </div>
+  </div>
+  <div class="namecard-image"></div>
+</paper-card>
+
+<paper-card class="namecard">
+  <div class="namecard-content">
+    <div class="card-content">
+      <div class="name">谢冰洋</div>
+      <div class="info">北京大学经济学院大四本科生</div>    
+    </div>
+  </div>
+  <div class="namecard-image"></div>
+</paper-card>
+
+<paper-card class="namecard">
+  <div class="namecard-content">
+    <div class="card-content">
+      <div class="name">薛秋月</div>
+      <div class="info">北京大学信息科学技术学院大三本科生</div>    
+    </div>
+  </div>
+  <div class="namecard-image"></div>
+</paper-card>
+
+		<paper-card heading="联系我们" image=./back.png" class="white">
+		<div class="card-content">请发送邮件至xxxxx@pku.edu.cn</div>
+		
+    </template>
+
+    <script>
+        Polymer({
+            is: "dsd-about",
+            properties:{
+
+            }
+        });
+
+    </script>
+</dom-module>
