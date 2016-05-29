@@ -29,7 +29,7 @@
         <paper-card class="content" heading="购物车">
             <div class="card-content">
 				<template is="dom-repeat" items="{{cast_result.successInfo}}">
-					<paper-card class="item" heading="{{item.info}}">
+					<paper-card class="item" heading="{{item.info.sort_identifier}}">
 						<table border=0>
 							<td>{{item.product_info.name}}</td>
 							<td>{{item.product_info.price}}</td>
