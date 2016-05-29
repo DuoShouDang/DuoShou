@@ -40,7 +40,6 @@
             </div>
             <div class="card-actions">
                 <paper-button raised class="view" on-tap="viewDetail">查看</paper-button>
-                <paper-button raised>加入购物车</paper-button>
             </div>
         </paper-card>
     </template>
@@ -50,6 +49,9 @@
             is: "dsd-good-item",
             viewDetail: function(evt){
                 window.location.href="/#/goodDetail/"+this.model.gid;
+            },
+            addtocart: function(){
+
             },
             properties:{
                 model:{
