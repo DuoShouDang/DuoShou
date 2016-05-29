@@ -36,6 +36,7 @@
 
 		<iron-ajax id="good_ajax" url="/api/goods/"+this.page_id methos="GET" body="{{good}}" last-response="{{result}}" on-response="load_complete"></iron-ajax>
 	</div>
+	<p>page_id: {{this.page_id}}, goodObject: {{this.good}}, allVersions: {{this.gversions}}, description: {{this.gdescription}}, currentVersion: {{this.currentVersion}} </p>
 
 	<style type="text/css">
 		.good-introduce{
