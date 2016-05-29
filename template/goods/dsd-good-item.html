@@ -1,0 +1,35 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
+
+<link rel="import" href="/bower_components/paper-card/paper-card.html">
+
+<dom-module id="dsd-good-item">
+    <template>
+        <paper-card>
+            {{model.name}}
+        </paper-card>
+    </template>
+
+    <script>
+        Polymer({
+            is: "dsd-good-item",
+            properties:{
+                model:{
+                    type: Object,
+                    value: {
+                        gid: 1,
+                        name: "Test",
+                        cid: "red",
+                        abstract: "XXXX",
+                        timestamp: 12345
+                    }
+                }
+            }
+        });
+
+    </script>
+</dom-module>

@@ -10,6 +10,7 @@ require_once "../data_management/DSDFileStorageManager.php";
 require_once "../data_management/DSDDatabaseConnector.php";
 require_once "../request_and_respond/DSDRequestResponder.php";
 require_once "../utils/Utils.php";
+require_once "../account_management/DSDAuthorizationChecker.php";
 
 class DSDRequestFileHandler{
     public static function upload(){
