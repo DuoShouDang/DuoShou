@@ -7,5 +7,7 @@
   "shoppingcart/:gid/:sid":"shoppingcart/modify",
 
   "admin/goods":"admin/modify",
-  "admin/goods/:gid":"admin/modify"
+  "admin/goods/:gid":"admin/modify",
+  "file/upload":"file/upload",
+  "file/:fhash":"file/modify"
 }
