@@ -1,0 +1,33 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<dom-module id="dsd-authentication">
+    <template>
+        <iron-localstorage name="token" value="{{token}}"></iron-localstorage>
+        <iron-localstorage name="username" value="{{verified_username}}"></iron-localstorage>
+        <iron-localstorage name="type" value="{{type}}"></iron-localstorage>
+    </template>
+
+    <script>
+        Polymer({
+            is: "dsd-authentication",
+            properties:{
+                username: {
+                    type: String,
+                    notify: true,
+                    reflectToAttribute:true
+                },
+                type: {
+                    type: String,
+                    notify: true,
+                    reflectToAttribute:true
+                },
+                token: {
+                    type: String,
+                    notify: true,
+                    reflectToAttribute:true
+                }
+            }
+        });
+
+    </script>
+</dom-module>
