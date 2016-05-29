@@ -11,6 +11,7 @@ require_once "../request_and_respond/DSDRequestResponder.php";
 class DSDRequestHandler{
     static function handleRequest(){
         $action=@$_GET["action"];
+        var_dump($action);
         if(!preg_match("#^[0-9a-zA-Z_]+$#", $action)){
             DSDRequestResponder::respond(false, "Invalid action: illegal character");
         }

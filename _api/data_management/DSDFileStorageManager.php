@@ -13,7 +13,6 @@ class DSDFileStorageManager{
             return false;
         }
         $realpath=DSDFileStorageManager::$rootpath . $token;
-        var_dump($realpath);
         return file_get_contents($realpath);
     }
     static function writeFileWithToken($token, $content){
