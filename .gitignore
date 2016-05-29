@@ -2,6 +2,8 @@
 bin/
 bin-debug/
 bin-release/
+.idea/
+_api/config/config.php
 
 # Other files and folders
 .settings/
