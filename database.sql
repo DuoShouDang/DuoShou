@@ -47,6 +47,18 @@ CREATE TABLE IF NOT EXISTS duoshoudang.shopping_cart
   CONSTRAINT PRIMARY KEY (user_id, good_id, sort_identifier)
 );
 
+CREATE TABLE IF NOT EXISTS duoshoudang.bill
+(
+  bill_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  paid BOOL NOT NULL DEFAULT FALSE,
+  deal BOOL NOT NULL DEFAULT FALSE,
+  comment TEXT NOT NULL DEFAULT NULL,
+  info LONGTEXT,
+  timestamp INT(11),
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
 CREATE TABLE files
 (
     fid INT(11) PRIMARY KEY NOT NULL,
