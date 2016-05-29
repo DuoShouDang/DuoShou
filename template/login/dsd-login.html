@@ -34,7 +34,7 @@
         <paper-toast id="tip">{{toast_msg}}</paper-toast>
 
         <iron-ajax id="login_ajax" url="/api/account/login" method="POST" body="{{ajax_content}}" last-response="{{login_result}}" on-response="login_completed"></iron-ajax>
-        <dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
+        <dsd-authentication token="{{token}}" type="{{type}}" username="{{verified_username}}"></dsd-authentication>
     </template>
 
     <script src="/script/md5.js"></script>
