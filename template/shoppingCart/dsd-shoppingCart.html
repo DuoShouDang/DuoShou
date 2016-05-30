@@ -89,10 +89,16 @@
 				var item=evt.model.item;
 				if(item.number==1){
 					this.del_URL="/api/shoppingcart/"+item.good_id+"/"+item.sort_identifer;
+					//TODO
+					
+					
 					this.$.deleteItem_ajax.generateRequest();
 					
 				}else{
 					this.put_URL="/api/shoppingcart/"+item.good_id+"/"+item.sort_identifer;
+					//TODO
+					
+					
 					item.number=item.number-1;
 					this.put_content={number:item.number};
 					this.$.putItem_ajax.generateRequest();
@@ -101,6 +107,9 @@
 			addOne: function(evt){
 				var item=evt.model.item;
 				this.put_URL="/api/shoppingcart/"+item.good_id+"/"+item.sort_identifer;
+				//TODO
+				
+				
 				item.number=item.number+1;
 				this.put_content={number:item.number};
 				this.$.putItem_ajax.generateRequest();				
