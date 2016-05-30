@@ -6,6 +6,7 @@
 <link rel="import" href="/template/utils/dsd-authentication.html">
 
 <link rel="import" href="/template/goods/dsd-good-item.html">
+<link rel="import" href="/bower_components/paper-material/paper-material.html">
 
 <dom-module id="dsd-goods">
     <template>
@@ -13,10 +14,40 @@
             dsd-good-item{
                 width: 25%;
             }
+            .search-field{
+                margin-top: 30px;
+                width: 60%;
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 30px;
+                background-color: white;
+            }
+            .search-field paper-input{
+                width: 90%;
+                margin-left: 5%;
+            }
+            .categories{
+                margin-top: 20px;
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+            .categories paper-button{
+                background-color: #00acc1;
+                color: white;
+            }
         </style>
         <dsd-authentication token="{{token}}"></dsd-authentication>
-        <iron-ajax url="/api/goods/all/{{page}}/50" last-response="{{goods_result}}" auto></iron-ajax>
-
+        <iron-ajax url="{{get_url}}" last-response="{{goods_result}}" auto></iron-ajax>
+        <paper-material class="search-field">
+            <paper-input label="搜索商品" value="{{keyword}}"></paper-input>
+        </paper-material>
+        <iron-ajax url="/api/category" last-response="{{category}}" auto></iron-ajax>
+        <!--<div class="categories">-->
+            <!--<template is="dom-repeat" items="{{category.successInfo}}">-->
+                <!--<paper-button raised>{{item.name}}</paper-button>-->
+            <!--</template>-->
+        <!--</div>-->
         <template is="dom-repeat" items="{{goods_result.successInfo.goods}}">
             <dsd-good-item model="{{item}}"></dsd-good-item>
         </template>
@@ -25,6 +56,16 @@
     <script>
         Polymer({
             is: "dsd-goods",
+            observers:[
+                    'keywordsChanged(keyword, page)'
+            ],
+            keywordsChanged: function(keyword, page){
+                if(keyword){
+                    this.get_url="/api/goods/search/"+keyword+"/0/50";
+                }else{
+                    this.get_url="/api/goods/all/"+page+"/50";
+                }
+            },
             properties:{
                 page:{
                     type: Number,

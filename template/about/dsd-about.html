@@ -5,14 +5,24 @@ href="/bower_components/paper-input/paper-input.html">
 href="/bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" 
-href="/bower_components/iron-localstorage/iron-localstorage.html">
+<link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
+
+<link rel="import" href="/bower_components/paper-card/paper-card.html">
 <dom-module id="dsd-about">
+  <style>
+    paper-card{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 80%;
+    }
+  </style>
     <template>
-        <paper-card heading="关于我们" image="./photo.jpg" class="white">
-		<div class="card-content">我们是北京大学计算机双学位学生，软件工程大作业完成了这个网络购物平台。</div>
-        <div class="contact">联系我们：请发送邮件至duoshoudang@gmail.com</div>
-		
+        <paper-card heading="关于我们" image="/images/photo.jpg" class="white">
+		  <div class="card-content">我们是北京大学计算机双学位学生，软件工程大作业完成了这个网络购物平台。
+          <div class="contact">联系我们：请发送邮件至duoshoudang@gmail.com</div>
+          </div>
+		</paper-card>
     </template>
 
     <script>
