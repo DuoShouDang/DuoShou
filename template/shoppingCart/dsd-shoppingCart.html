@@ -99,8 +99,8 @@
 				}
 			},
 			addOne: function(evt){
-				this.put_URL="/api/shoppingcart/"+item.good_id+"/"+item.sort_identifer;
 				var item=evt.model.item;
+				this.put_URL="/api/shoppingcart/"+item.good_id+"/"+item.sort_identifer;
 				item.number=item.number+1;
 				this.put_content={number:item.number};
 				this.$.putItem_ajax.generateRequest();				
