@@ -13,6 +13,6 @@ $GLOBALS['db_password']='1qaz2wsx';
 $GLOBALS['db_database']='duoshoudang';
 $GLOBALS['db_port']=3306;
 
-$GLOBALS['base_url']='http://www.duoshoudang.com/';
+$GLOBALS['base_url']='http://www.duoshoudang.net/';
 $GLOBALS['admin_password']='admin_password';
 
