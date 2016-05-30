@@ -42,7 +42,7 @@
                 <paper-button on-tap="jump" data="about"><iron-icon icon="info"></iron-icon>&nbsp;&nbsp;关于</paper-button>
                 <div class="title"></div>
                 <template is="dom-if" if="{{token}}">
-                    <paper-icon-button icon="shopping-cart" on-tap="jump" data="shoppingcart"></paper-icon-button>
+                    <paper-icon-button icon="shopping-cart" on-tap="jump" data="shoppingCart"></paper-icon-button>
                     <paper-icon-button icon="account-circle" on-tap="jump" data="orders"></paper-icon-button>
                 </template>
                 <template is="dom-if" if="{{!token}}">
