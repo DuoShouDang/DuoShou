@@ -53,8 +53,8 @@
 		
 		
 		<iron-ajax auto id="showcart_ajax" url="/api/shoppingcart" method="GET" headers="{{showcart_auth}}" last-response="{{cast_result}}"></iron-ajax>
-		<iron-ajax id="deleteItem_ajax" url="/api/shoppingcart/{{item.good_id}}/{{item.sort_identifer}}" method="DELETE" headers="{{delItem_auth}}" last-response="{{delItem_result}}"></iron-ajax>
-		<iron-ajax id="putItem_ajax" url="/api/shoppingcart/{{item.good_id}}/{{item.sort_identifer}}" method="PUT" headers="{{delItem_auth}}" body="{{put_content}}" last-response="{{putItem_result}}"></iron-ajax>
+		<iron-ajax id="deleteItem_ajax" url="{{del_URL}}" method="DELETE" headers="{{showcart_auth}}" last-response="{{delItem_result}}"></iron-ajax>
+		<iron-ajax id="putItem_ajax" url="{{put_URL}}" method="PUT" headers="{{showcart_auth}}" body="{{put_content}}" last-response="{{putItem_result}}"></iron-ajax>
 
         <iron-ajax id="cashout_ajax" url="/api/bill" method="POST" body="{{ajax_content}}" last-response="{{cashout_result}}" on-response="cashout_completed"></iron-ajax>
         <dsd-authentication token="{{token}}" type="{{type}}" username="{{username}}"></dsd-authentication>
@@ -88,15 +88,18 @@
 			removeOne: function(evt){
 				var item=evt.model.item;
 				if(item.number==1){
+					this.del_URL="/api/shoppingcart/"+item.good_id+"/"+item.sort_identifer;
 					this.$.deleteItem_ajax.generateRequest();
 					
 				}else{
+					this.put_URL="/api/shoppingcart/"+item.good_id+"/"+item.sort_identifer;
 					item.number=item.number-1;
 					this.put_content={number:item.number};
 					this.$.putItem_ajax.generateRequest();
 				}
 			},
 			addOne: function(evt){
+				this.put_URL="/api/shoppingcart/"+item.good_id+"/"+item.sort_identifer;
 				var item=evt.model.item;
 				item.number=item.number+1;
 				this.put_content={number:item.number};
