@@ -28,7 +28,7 @@
 				<div class="choose-version">
 					<span>选择：</span>
 					<template is="dom-repeat" items="{{gversions}}">
-						<a class="version" on-tap="_versionChanged">{{item}}</a>
+						<a class="version" on-tap="_versionChanged">{{_getVersionName(item)}}</a>
 					</template>
 				</div>
 				<div class="remain-count">还剩<span class="remain_number">{{currentObject.remains}}</span>件</div>
@@ -140,6 +140,12 @@
 			var newVersion = evt.model.item;
 			this.currentVersion = newVersion;
 			this.currentObject = this.good.info[this.currentVersion];
+		},
+		_getVersionName: function(version){
+			var info = this.good.info;
+			var versionObject = info[version];
+			versionName = versionObject.name;
+			return versionName;
 		},
 		_buyNowPressed: function(evt){
 			this.add_request_body=JSON.stringify({"number": this.add_to_cart_number});
