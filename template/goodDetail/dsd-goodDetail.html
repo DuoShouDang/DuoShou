@@ -148,19 +148,31 @@
 			return versionName;
 		},
 		_buyNowPressed: function(evt){
+			if(! this.token){
+				this.toast_msg = "请先登陆";
+				window.location.href = "/#/login";
+				window.location.reload(true);
+			}else{
 			this.add_request_body=JSON.stringify({"number": this.add_to_cart_number});
 			this.$.add_to_cart_ajax.generateRequest();
 			window.location.href = "/#/shoppingCart";
+			window.location.reload(true);
+		}
 		},
 		_addToCartPressed: function(evt){
+			if(! this.token){
+				this.toast_msg = "请先登陆";
+				window.location.href = "/#/login";
+			}else{
 			this.add_request_body=JSON.stringify({"number": this.add_to_cart_number});
 			this.$.add_to_cart_ajax.generateRequest();
+			}
 		},
 		add_completed: function(){
 			if(this.add_result.success){
 				this.toast_msg = "商品已成功加入购物车";
 			}else{
-				this.toast_msg = "商品加入购物车失败";
+				this.toast_msg = "商品加入购物车失败，商品已存在";
 			}
 			this.$.add_success.open();
 		},
