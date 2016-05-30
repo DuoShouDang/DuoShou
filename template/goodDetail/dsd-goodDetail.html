@@ -151,10 +151,12 @@
 			if(! this.token){
 				this.toast_msg = "请先登陆";
 				window.location.href = "/#/login";
+				window.location.reload(true);
 			}else{
 			this.add_request_body=JSON.stringify({"number": this.add_to_cart_number});
 			this.$.add_to_cart_ajax.generateRequest();
 			window.location.href = "/#/shoppingCart";
+			window.location.reload(true);
 		}
 		},
 		_addToCartPressed: function(evt){
